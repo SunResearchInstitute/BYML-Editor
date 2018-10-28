@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LunarLabs.Parser.XML;
+using LunarLabs.Parser.YAML;
+using System;
 using System.IO;
 using System.Windows.Forms;
 
@@ -8,7 +10,7 @@ namespace BYML_Editor
     public partial class Editor : Form
     {
         static DirectoryInfo tempPath = new DirectoryInfo($"{Path.GetTempPath()}/BYML");
-        static FileInfo ymlPath = new FileInfo($"{Path.GetTempPath()}/BYML/temp.yml");
+        static FileInfo yamlPath = new FileInfo($"{Path.GetTempPath()}/BYML/temp.yaml");
         static FileInfo savePath = new FileInfo($"{Path.GetTempPath()}/BYML/save");
 
         public Editor()
@@ -16,7 +18,48 @@ namespace BYML_Editor
             InitializeComponent();
         }
 
+        private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (yamlPath.Exists) yamlPath.Delete();
+            if (savePath.Exists) savePath.Delete();
+            File.WriteAllText(yamlPath.FullName, textBox.Text);
+            System.Diagnostics.Process process = new System.Diagnostics.Process();
+            System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo
+            {
+                WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden,
+                FileName = "cmd.exe",
+                Arguments = $"/C yml_to_byml.exe \"{yamlPath.FullName}\" \"{savePath.FullName}\""
+            };
+            process.StartInfo = startInfo;
+            process.Start();
+            process.WaitForExit();
+            saveFileDialog.ShowDialog();
+            MoveWithReplace(savePath.FullName, saveFileDialog.FileName);
+        }
+
         private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ConvertBYML(false);
+        }
+
+        private void OpenXMLDisplayToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ConvertBYML(true);
+        }
+
+        private void CreateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            textBox.Text = "";
+            textBox.ReadOnly = false;
+        }
+
+        private void ClearToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            textBox.Text = "";
+            textBox.ReadOnly = true;
+        }
+
+        private void ConvertBYML(bool wantXML)
         {
             Directory.CreateDirectory(tempPath.FullName);
 
@@ -24,39 +67,37 @@ namespace BYML_Editor
             {
                 FileInfo selected = new FileInfo(openFileDialog.FileName);
                 System.Diagnostics.Process process = new System.Diagnostics.Process();
-                if (ymlPath.Exists) ymlPath.Delete();
+                if (yamlPath.Exists) yamlPath.Delete();
                 System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo
                 {
                     WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden,
                     FileName = "cmd.exe",
-                    Arguments = $"/C byml_to_yml.exe \"{selected.FullName}\" \"{ymlPath.FullName}\""
+                    Arguments = $"/C byml_to_yml.exe \"{selected.FullName}\" \"{yamlPath.FullName}\""
                 };
                 process.StartInfo = startInfo;
                 process.Start();
                 process.WaitForExit();
 
-                ymlBox.Text = File.ReadAllText(ymlPath.FullName);
-                ymlBox.ReadOnly = false;
-            }
-        }
 
-        private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (ymlPath.Exists) ymlPath.Delete();
-            if (savePath.Exists) savePath.Delete();
-            File.WriteAllText(ymlPath.FullName, ymlBox.Text);
-            System.Diagnostics.Process process = new System.Diagnostics.Process();
-            System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo
-            {
-                WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden,
-                FileName = "cmd.exe",
-                Arguments = $"/C yml_to_byml.exe \"{ymlPath.FullName}\" \"{savePath.FullName}\""
-            };
-            process.StartInfo = startInfo;
-            process.Start();
-            process.WaitForExit();
-            saveFileDialog.ShowDialog();
-            MoveWithReplace(savePath.FullName, saveFileDialog.FileName);
+                if (wantXML == false)
+                {
+                    textBox.Text = File.ReadAllText(yamlPath.FullName);
+                    textBox.ReadOnly = false;
+                }
+                else
+                {
+                    //fix YAML header and combine it with actual YAML
+                    string yaml = "---\n";
+                    yaml = yaml.Replace("\r", "");
+                    yaml += File.ReadAllText(yamlPath.FullName);
+                    var root = YAMLReader.ReadFromString(yaml);
+                    var xml = XMLWriter.WriteToString(root);
+
+                    textBox.Text = File.ReadAllText(xml);
+                    textBox.ReadOnly = false;
+                }
+            }
+           
         }
 
         public static void MoveWithReplace(string sourceFileName, string destFileName)
@@ -69,17 +110,6 @@ namespace BYML_Editor
             }
 
             File.Move(sourceFileName, destFileName);
-        }
-
-        private void ClearToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ymlBox.Text = "";
-            ymlBox.ReadOnly = true;
-        }
-
-        private void CreateToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ymlBox.ReadOnly = false;
         }
     }
 }
