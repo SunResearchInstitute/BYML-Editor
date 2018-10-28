@@ -81,10 +81,5 @@ namespace BYML_Editor
         {
             ymlBox.ReadOnly = false;
         }
-
-        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }
