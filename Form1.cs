@@ -42,6 +42,7 @@ namespace BYML_Editor
 
         private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            //todo: redo save to be more like load/open
             if (yamlPath.Exists) yamlPath.Delete();
             if (savePath.Exists) savePath.Delete();
             File.WriteAllText(yamlPath.FullName, textBox.Text);
@@ -93,13 +94,11 @@ namespace BYML_Editor
                     textBox.Text = File.ReadAllText(xml);
                 }
                 textBox.ReadOnly = false;
-            }
-           
+            } 
         }
 
         public static void MoveWithReplace(string sourceFileName, string destFileName)
         {
-
             //first, delete target file if exists, as File.Move() does not support overwrite
             if (File.Exists(destFileName))
             {
