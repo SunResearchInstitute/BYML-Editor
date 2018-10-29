@@ -82,20 +82,18 @@ namespace BYML_Editor
                 if (wantXML == false)
                 {
                     textBox.Text = File.ReadAllText(yamlPath.FullName);
-                    textBox.ReadOnly = false;
                 }
                 else
                 {
                     //fix YAML header and combine it with actual YAML
                     string yaml = "---\n";
-                    yaml = yaml.Replace("\r", "");
                     yaml += File.ReadAllText(yamlPath.FullName);
+                    yaml = yaml.Replace("\r", "");
                     var root = YAMLReader.ReadFromString(yaml);
                     var xml = XMLWriter.WriteToString(root);
-
                     textBox.Text = File.ReadAllText(xml);
-                    textBox.ReadOnly = false;
                 }
+                textBox.ReadOnly = false;
             }
            
         }
