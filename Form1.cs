@@ -1,4 +1,4 @@
-﻿using LunarLabs.Parser.XML;
+using LunarLabs.Parser.XML;
 using LunarLabs.Parser.YAML;
 using System;
 using System.IO;
@@ -17,26 +17,7 @@ namespace BYML_Editor
         {
             InitializeComponent();
         }
-
-        private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (yamlPath.Exists) yamlPath.Delete();
-            if (savePath.Exists) savePath.Delete();
-            File.WriteAllText(yamlPath.FullName, textBox.Text);
-            System.Diagnostics.Process process = new System.Diagnostics.Process();
-            System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo
-            {
-                WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden,
-                FileName = "cmd.exe",
-                Arguments = $"/C yml_to_byml.exe \"{yamlPath.FullName}\" \"{savePath.FullName}\""
-            };
-            process.StartInfo = startInfo;
-            process.Start();
-            process.WaitForExit();
-            saveFileDialog.ShowDialog();
-            MoveWithReplace(savePath.FullName, saveFileDialog.FileName);
-        }
-
+        
         private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ConvertBYML(false);
@@ -59,6 +40,25 @@ namespace BYML_Editor
             textBox.ReadOnly = true;
         }
 
+        private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (yamlPath.Exists) yamlPath.Delete();
+            if (savePath.Exists) savePath.Delete();
+            File.WriteAllText(yamlPath.FullName, textBox.Text);
+            System.Diagnostics.Process process = new System.Diagnostics.Process();
+            System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo
+            {
+                WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden,
+                FileName = "cmd.exe",
+                Arguments = $"/C yml_to_byml.exe \"{yamlPath.FullName}\" \"{savePath.FullName}\""
+            };
+            process.StartInfo = startInfo;
+            process.Start();
+            process.WaitForExit();
+            saveFileDialog.ShowDialog();
+            MoveWithReplace(savePath.FullName, saveFileDialog.FileName);
+        }
+
         private void ConvertBYML(bool wantXML)
         {
             Directory.CreateDirectory(tempPath.FullName);
@@ -77,7 +77,6 @@ namespace BYML_Editor
                 process.StartInfo = startInfo;
                 process.Start();
                 process.WaitForExit();
-
 
                 if (wantXML == false)
                 {
