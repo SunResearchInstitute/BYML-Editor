@@ -106,14 +106,15 @@
             this.createToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
             this.createToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
             this.createToolStripMenuItem.Text = "Create (YAML display)";
+            this.createToolStripMenuItem.Click += new System.EventHandler(this.CreateToolStripMenuItem_Click_1);
             // 
             // createXMLToolStripMenuItem
             // 
-            this.createXMLToolStripMenuItem.Enabled = false;
             this.createXMLToolStripMenuItem.Name = "createXMLToolStripMenuItem";
             this.createXMLToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.N)));
             this.createXMLToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
             this.createXMLToolStripMenuItem.Text = "Create (XML display)";
+            this.createXMLToolStripMenuItem.Click += new System.EventHandler(this.CreateXMLToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 

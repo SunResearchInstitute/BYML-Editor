@@ -17,15 +17,14 @@ namespace BYML_Editor
             InitializeComponent();
         }
 
-        private void OpenXMLDisplayToolStripMenuItem_Click_1(object sender, EventArgs e)
-        {
-            ConvertBYML(true);
-        }
-
-
         private void OpenToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
             ConvertBYML(false);
+        }
+
+        private void OpenXMLDisplayToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            ConvertBYML(true);
         }
 
         private void CreateXMLToolStripMenuItem_Click(object sender, EventArgs e)
@@ -35,18 +34,17 @@ namespace BYML_Editor
             IsXML = true;
         }
 
-        private void CreateToolStripMenuItem_Click(object sender, EventArgs e)
+        private void CreateToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
             textBox.Text = "";
-            textBox.ReadOnly = false;
+            textBox.ReadOnly = true;
             IsXML = false;
         }
 
         private void ClearToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            textBox.Text = "";
+            openFileDialog.FileName = "";
             textBox.ReadOnly = true;
-            saveToolStripMenuItem.Enabled = false;
         }
 
         private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -77,6 +75,7 @@ namespace BYML_Editor
                 process.Start();
                 process.WaitForExit();
                 }
+                saveFileDialog.FileName = "";
             }
         }
 
@@ -110,6 +109,7 @@ namespace BYML_Editor
                     textBox.Text = BymlConverter.GetXml(selected.FullName);
                     IsXML = true;
                 }
+                openFileDialog.FileName = "";
                 textBox.ReadOnly = false;
             } 
         }
