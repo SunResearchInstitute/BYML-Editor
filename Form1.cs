@@ -43,7 +43,7 @@ namespace BYML_Editor
 
         private void ClearToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            openFileDialog.FileName = "";
+            textBox.Text = "";
             textBox.ReadOnly = true;
         }
 
