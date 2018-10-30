@@ -9,9 +9,9 @@ namespace BYML_Editor
 
     public partial class Editor : Form
     {
-        static DirectoryInfo tempPath = new DirectoryInfo($"{Path.GetTempPath()}/BYML");
-        static FileInfo yamlPath = new FileInfo($"{Path.GetTempPath()}/BYML/temp.yaml");
-        static FileInfo savePath = new FileInfo($"{Path.GetTempPath()}/BYML/save");
+        static DirectoryInfo tempPath = new DirectoryInfo($"{Path.GetTempPath()}/BYML-Editor");
+        static FileInfo yamlPath = new FileInfo($"{Path.GetTempPath()}/BYML-Editor/temp.yaml");
+        private bool IsXML;
 
         public Editor()
         {
@@ -21,6 +21,7 @@ namespace BYML_Editor
         private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ConvertBYML(false);
+
         }
 
         private void OpenXMLDisplayToolStripMenuItem_Click(object sender, EventArgs e)
@@ -28,36 +29,50 @@ namespace BYML_Editor
             ConvertBYML(true);
         }
 
+        private void CreateXMLToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            textBox.Text = "";
+            textBox.ReadOnly = false;
+            IsXML = true;
+        }
+
         private void CreateToolStripMenuItem_Click(object sender, EventArgs e)
         {
             textBox.Text = "";
             textBox.ReadOnly = false;
+            IsXML = false;
         }
 
         private void ClearToolStripMenuItem_Click(object sender, EventArgs e)
         {
             textBox.Text = "";
             textBox.ReadOnly = true;
+            saveToolStripMenuItem.Enabled = false;
         }
 
         private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //todo: redo save to be more like load/open
-            if (yamlPath.Exists) yamlPath.Delete();
-            if (savePath.Exists) savePath.Delete();
-            File.WriteAllText(yamlPath.FullName, textBox.Text);
-            System.Diagnostics.Process process = new System.Diagnostics.Process();
-            System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo
-            {
-                WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden,
-                FileName = "cmd.exe",
-                Arguments = $"/C yml_to_byml.exe \"{yamlPath.FullName}\" \"{savePath.FullName}\""
-            };
-            process.StartInfo = startInfo;
-            process.Start();
-            process.WaitForExit();
             saveFileDialog.ShowDialog();
-            MoveWithReplace(savePath.FullName, saveFileDialog.FileName);
+            if (saveFileDialog.FileName != "")
+            {
+                if (IsXML == true)
+                {
+                    //todo: add YAML to XML
+                }
+                FileInfo savePath = new FileInfo(saveFileDialog.FileName);
+                if (yamlPath.Exists) yamlPath.Delete();
+                File.WriteAllText(yamlPath.FullName, textBox.Text);
+                System.Diagnostics.Process process = new System.Diagnostics.Process();
+                System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo
+                {
+                    WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden,
+                    FileName = "cmd.exe",
+                    Arguments = $"/C yml_to_byml.exe \"{yamlPath.FullName}\" \"{savePath.FullName}\""
+                };
+                process.StartInfo = startInfo;
+                process.Start();
+                process.WaitForExit();
+            }
         }
 
         private void ConvertBYML(bool wantXML)
@@ -82,30 +97,22 @@ namespace BYML_Editor
                 if (wantXML == false)
                 {
                     textBox.Text = File.ReadAllText(yamlPath.FullName);
+                    IsXML = false;
                 }
                 else
                 {
                     //fix YAML header and combine it with actual YAML
                     string yaml = "---\n";
                     yaml += File.ReadAllText(yamlPath.FullName);
+                    yaml += "---\n ";
                     yaml = yaml.Replace("\r", "");
                     var root = YAMLReader.ReadFromString(yaml);
                     var xml = XMLWriter.WriteToString(root);
                     textBox.Text = File.ReadAllText(xml);
+                    IsXML = true;
                 }
                 textBox.ReadOnly = false;
             } 
-        }
-
-        public static void MoveWithReplace(string sourceFileName, string destFileName)
-        {
-            //first, delete target file if exists, as File.Move() does not support overwrite
-            if (File.Exists(destFileName))
-            {
-                File.Delete(destFileName);
-            }
-
-            File.Move(sourceFileName, destFileName);
         }
     }
 }

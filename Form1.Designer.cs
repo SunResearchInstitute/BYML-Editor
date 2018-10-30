@@ -31,9 +31,10 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Editor));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.createToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openXMLDisplayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.createToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.createXMLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
@@ -55,47 +56,63 @@
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.createToolStripMenuItem,
             this.openToolStripMenuItem,
             this.openXMLDisplayToolStripMenuItem,
+            this.createToolStripMenuItem,
+            this.createXMLToolStripMenuItem,
             this.saveToolStripMenuItem,
             this.clearToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
             // 
-            // createToolStripMenuItem
-            // 
-            this.createToolStripMenuItem.Name = "createToolStripMenuItem";
-            this.createToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.createToolStripMenuItem.Text = "Create";
-            this.createToolStripMenuItem.Click += new System.EventHandler(this.CreateToolStripMenuItem_Click);
-            // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.openToolStripMenuItem.Text = "Open (YML display)";
+            this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
+            this.openToolStripMenuItem.Text = "Open (YAML display)";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.OpenToolStripMenuItem_Click);
             // 
             // openXMLDisplayToolStripMenuItem
             // 
+            this.openXMLDisplayToolStripMenuItem.Enabled = false;
             this.openXMLDisplayToolStripMenuItem.Name = "openXMLDisplayToolStripMenuItem";
-            this.openXMLDisplayToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openXMLDisplayToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.O)));
+            this.openXMLDisplayToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
             this.openXMLDisplayToolStripMenuItem.Text = "Open (XML display)";
             this.openXMLDisplayToolStripMenuItem.Click += new System.EventHandler(this.OpenXMLDisplayToolStripMenuItem_Click);
+            // 
+            // createToolStripMenuItem
+            // 
+            this.createToolStripMenuItem.Name = "createToolStripMenuItem";
+            this.createToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
+            this.createToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
+            this.createToolStripMenuItem.Text = "Create (YAML display)";
+            this.createToolStripMenuItem.Click += new System.EventHandler(this.CreateToolStripMenuItem_Click);
+            // 
+            // createXMLToolStripMenuItem
+            // 
+            this.createXMLToolStripMenuItem.Enabled = false;
+            this.createXMLToolStripMenuItem.Name = "createXMLToolStripMenuItem";
+            this.createXMLToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.N)));
+            this.createXMLToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
+            this.createXMLToolStripMenuItem.Text = "Create (XML display)";
+            this.createXMLToolStripMenuItem.Click += new System.EventHandler(this.CreateXMLToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.SaveToolStripMenuItem_Click);
             // 
             // clearToolStripMenuItem
             // 
             this.clearToolStripMenuItem.Name = "clearToolStripMenuItem";
-            this.clearToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.clearToolStripMenuItem.ShowShortcutKeys = false;
+            this.clearToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
             this.clearToolStripMenuItem.Text = "Clear";
             this.clearToolStripMenuItem.Click += new System.EventHandler(this.ClearToolStripMenuItem_Click);
             // 
@@ -147,6 +164,7 @@
         private System.Windows.Forms.ToolStripMenuItem clearToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem createToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openXMLDisplayToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem createXMLToolStripMenuItem;
     }
 }
 
