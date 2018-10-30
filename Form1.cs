@@ -47,38 +47,6 @@ namespace BYML_Editor
             textBox.ReadOnly = true;
         }
 
-        private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            //todo: big endian save
-            saveFileDialog.ShowDialog();
-            if (saveFileDialog.FileName != "")
-            {
-                FileInfo savePath = new FileInfo(saveFileDialog.FileName);
-                if (IsXML == true)
-                {
-                    if (savePath.Exists) savePath.Delete();
-                    File.WriteAllBytes(savePath.FullName ,BymlConverter.GetByml(textBox.Text));
-                }
-                else
-                { 
-                if (yamlPath.Exists) yamlPath.Delete();
-                File.WriteAllText(yamlPath.FullName, textBox.Text);
-                System.Diagnostics.Process process = new System.Diagnostics.Process();
-                System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo
-                {
-                    WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden,
-                    FileName = "cmd.exe",
-                    Arguments = $"/C yml_to_byml.exe \"{yamlPath.FullName}\" \"{savePath.FullName}\""
-                };
-                process.StartInfo = startInfo;
-                //todo: catch errors somehow
-                process.Start();
-                process.WaitForExit();
-                }
-                saveFileDialog.FileName = "";
-            }
-        }
-
         private void ConvertBYML(bool wantXML)
         {
             Directory.CreateDirectory(tempPath.FullName);
@@ -112,6 +80,68 @@ namespace BYML_Editor
                 openFileDialog.FileName = "";
                 textBox.ReadOnly = false;
             } 
+        }
+
+        private void SaveToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            saveFileDialog.ShowDialog();
+            if (saveFileDialog.FileName != "")
+            {
+                FileInfo savePath = new FileInfo(saveFileDialog.FileName);
+                if (IsXML == true)
+                {
+                    if (savePath.Exists) savePath.Delete();
+                    File.WriteAllBytes(savePath.FullName, BymlConverter.GetByml(textBox.Text));
+                }
+                else
+                {
+                    if (yamlPath.Exists) yamlPath.Delete();
+                    File.WriteAllText(yamlPath.FullName, textBox.Text);
+                    System.Diagnostics.Process process = new System.Diagnostics.Process();
+                    System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo
+                    {
+                        WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden,
+                        FileName = "cmd.exe",
+                        Arguments = $"/C yml_to_byml.exe \"{yamlPath.FullName}\" \"{savePath.FullName}\""
+                    };
+                    process.StartInfo = startInfo;
+                    //todo: catch errors somehow
+                    process.Start();
+                    process.WaitForExit();
+                }
+                saveFileDialog.FileName = "";
+            }
+        }
+
+        private void SaveBigEndianToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            saveFileDialog.ShowDialog();
+            if (saveFileDialog.FileName != "")
+            {
+                FileInfo savePath = new FileInfo(saveFileDialog.FileName);
+                if (IsXML == true)
+                {
+                    if (savePath.Exists) savePath.Delete();
+                    File.WriteAllBytes(savePath.FullName, BymlConverter.GetByml(textBox.Text));
+                }
+                else
+                {
+                    if (yamlPath.Exists) yamlPath.Delete();
+                    File.WriteAllText(yamlPath.FullName, textBox.Text);
+                    System.Diagnostics.Process process = new System.Diagnostics.Process();
+                    System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo
+                    {
+                        WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden,
+                        FileName = "cmd.exe",
+                        Arguments = $"/C yml_to_byml.exe \"{yamlPath.FullName}\" \"{savePath.FullName}\" -b"
+                    };
+                    process.StartInfo = startInfo;
+                    //todo: catch errors somehow
+                    process.Start();
+                    process.WaitForExit();
+                }
+                saveFileDialog.FileName = "";
+            }
         }
     }
 }
