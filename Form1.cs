@@ -1,8 +1,7 @@
-using LunarLabs.Parser.XML;
-using LunarLabs.Parser.YAML;
 using System;
 using System.IO;
 using System.Windows.Forms;
+using The4Dimension;
 
 namespace BYML_Editor
 {
@@ -17,16 +16,16 @@ namespace BYML_Editor
         {
             InitializeComponent();
         }
-        
-        private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ConvertBYML(false);
 
-        }
-
-        private void OpenXMLDisplayToolStripMenuItem_Click(object sender, EventArgs e)
+        private void OpenXMLDisplayToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
             ConvertBYML(true);
+        }
+
+
+        private void OpenToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            ConvertBYML(false);
         }
 
         private void CreateXMLToolStripMenuItem_Click(object sender, EventArgs e)
@@ -52,14 +51,18 @@ namespace BYML_Editor
 
         private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            //todo: big endian save
             saveFileDialog.ShowDialog();
             if (saveFileDialog.FileName != "")
             {
+                FileInfo savePath = new FileInfo(saveFileDialog.FileName);
                 if (IsXML == true)
                 {
-                    //todo: add YAML to XML
+                    if (savePath.Exists) savePath.Delete();
+                    File.WriteAllBytes(savePath.FullName ,BymlConverter.GetByml(textBox.Text));
                 }
-                FileInfo savePath = new FileInfo(saveFileDialog.FileName);
+                else
+                { 
                 if (yamlPath.Exists) yamlPath.Delete();
                 File.WriteAllText(yamlPath.FullName, textBox.Text);
                 System.Diagnostics.Process process = new System.Diagnostics.Process();
@@ -70,8 +73,10 @@ namespace BYML_Editor
                     Arguments = $"/C yml_to_byml.exe \"{yamlPath.FullName}\" \"{savePath.FullName}\""
                 };
                 process.StartInfo = startInfo;
+                //todo: catch errors somehow
                 process.Start();
                 process.WaitForExit();
+                }
             }
         }
 
@@ -82,33 +87,27 @@ namespace BYML_Editor
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 FileInfo selected = new FileInfo(openFileDialog.FileName);
-                System.Diagnostics.Process process = new System.Diagnostics.Process();
-                if (yamlPath.Exists) yamlPath.Delete();
-                System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo
-                {
-                    WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden,
-                    FileName = "cmd.exe",
-                    Arguments = $"/C byml_to_yml.exe \"{selected.FullName}\" \"{yamlPath.FullName}\""
-                };
-                process.StartInfo = startInfo;
-                process.Start();
-                process.WaitForExit();
 
                 if (wantXML == false)
                 {
+                    System.Diagnostics.Process process = new System.Diagnostics.Process();
+                    if (yamlPath.Exists) yamlPath.Delete();
+                    System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo
+                    {
+                        WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden,
+                        FileName = "cmd.exe",
+                        Arguments = $"/C byml_to_yml.exe \"{selected.FullName}\" \"{yamlPath.FullName}\""
+                    };
+                    process.StartInfo = startInfo;
+                    process.Start();
+                    process.WaitForExit();
+
                     textBox.Text = File.ReadAllText(yamlPath.FullName);
                     IsXML = false;
                 }
                 else
                 {
-                    //fix YAML header and combine it with actual YAML
-                    string yaml = "---\n";
-                    yaml += File.ReadAllText(yamlPath.FullName);
-                    yaml += "---\n ";
-                    yaml = yaml.Replace("\r", "");
-                    var root = YAMLReader.ReadFromString(yaml);
-                    var xml = XMLWriter.WriteToString(root);
-                    textBox.Text = File.ReadAllText(xml);
+                    textBox.Text = BymlConverter.GetXml(selected.FullName);
                     IsXML = true;
                 }
                 textBox.ReadOnly = false;
