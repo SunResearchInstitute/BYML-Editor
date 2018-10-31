@@ -17,17 +17,17 @@ namespace BYML_Editor
             InitializeComponent();
         }
 
-        private void OpenToolStripMenuItem_Click_1(object sender, EventArgs e)
+        private void OpenYAMLDisplayToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ConvertBYML(false);
         }
 
-        private void OpenXMLDisplayToolStripMenuItem_Click_1(object sender, EventArgs e)
+        private void OpenXMLDisplayToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ConvertBYML(true);
         }
 
-        private void CreateToolStripMenuItem_Click_1(object sender, EventArgs e)
+        private void CreateYAMLToolStripMenuItem_Click(object sender, EventArgs e)
         {
             textBox.Text = "";
             textBox.ReadOnly = true;
@@ -41,7 +41,7 @@ namespace BYML_Editor
             IsXML = true;
         }
 
-        private void SaveToolStripMenuItem_Click_1(object sender, EventArgs e)
+        private void SaveLittleEndianToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Save(false);
         }

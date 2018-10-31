@@ -38,7 +38,7 @@
             this.createToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.createXMLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveLittleEndianToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveBigEndianToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
@@ -83,7 +83,7 @@
             this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
             this.openToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
             this.openToolStripMenuItem.Text = "Open (YAML display)";
-            this.openToolStripMenuItem.Click += new System.EventHandler(this.OpenToolStripMenuItem_Click_1);
+            this.openToolStripMenuItem.Click += new System.EventHandler(this.OpenYAMLDisplayToolStripMenuItem_Click);
             // 
             // openXMLDisplayToolStripMenuItem
             // 
@@ -91,7 +91,7 @@
             this.openXMLDisplayToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.O)));
             this.openXMLDisplayToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
             this.openXMLDisplayToolStripMenuItem.Text = "Open (XML display)";
-            this.openXMLDisplayToolStripMenuItem.Click += new System.EventHandler(this.OpenXMLDisplayToolStripMenuItem_Click_1);
+            this.openXMLDisplayToolStripMenuItem.Click += new System.EventHandler(this.OpenXMLDisplayToolStripMenuItem_Click);
             // 
             // createToolStripMenuItem1
             // 
@@ -108,7 +108,7 @@
             this.createToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
             this.createToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
             this.createToolStripMenuItem.Text = "Create (YAML display)";
-            this.createToolStripMenuItem.Click += new System.EventHandler(this.CreateToolStripMenuItem_Click_1);
+            this.createToolStripMenuItem.Click += new System.EventHandler(this.CreateYAMLToolStripMenuItem_Click);
             // 
             // createXMLToolStripMenuItem
             // 
@@ -121,19 +121,19 @@
             // saveToolStripMenuItem1
             // 
             this.saveToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.saveToolStripMenuItem,
+            this.saveLittleEndianToolStripMenuItem,
             this.saveBigEndianToolStripMenuItem});
             this.saveToolStripMenuItem1.Name = "saveToolStripMenuItem1";
             this.saveToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.saveToolStripMenuItem1.Text = "Save";
             // 
-            // saveToolStripMenuItem
+            // saveLittleEndianToolStripMenuItem
             // 
-            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
-            this.saveToolStripMenuItem.Text = "Save (Little Endian)";
-            this.saveToolStripMenuItem.Click += new System.EventHandler(this.SaveToolStripMenuItem_Click_1);
+            this.saveLittleEndianToolStripMenuItem.Name = "saveLittleEndianToolStripMenuItem";
+            this.saveLittleEndianToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.saveLittleEndianToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
+            this.saveLittleEndianToolStripMenuItem.Text = "Save (Little Endian)";
+            this.saveLittleEndianToolStripMenuItem.Click += new System.EventHandler(this.SaveLittleEndianToolStripMenuItem_Click);
             // 
             // saveBigEndianToolStripMenuItem
             // 
@@ -203,7 +203,7 @@
         private System.Windows.Forms.ToolStripMenuItem createToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem createXMLToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveLittleEndianToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveBigEndianToolStripMenuItem;
     }
 }
