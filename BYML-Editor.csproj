@@ -63,6 +63,7 @@
     <Compile Include="TheFourthdimension\BymlConverter.cs" />
     <Compile Include="TheFourthdimension\BymlFormat.cs" />
     <Compile Include="TheFourthdimension\CustomClasses.cs" />
+    <Compile Include="Yaz0Enc.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

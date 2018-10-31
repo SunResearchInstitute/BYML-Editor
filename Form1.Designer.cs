@@ -41,6 +41,8 @@
             this.saveLittleEndianToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveBigEndianToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.yaz0CompressLittleEndianToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.textBox = new System.Windows.Forms.TextBox();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
@@ -50,7 +52,8 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem});
+            this.fileToolStripMenuItem,
+            this.toolsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(800, 24);
@@ -74,7 +77,7 @@
             this.openToolStripMenuItem,
             this.openXMLDisplayToolStripMenuItem});
             this.openToolStripMenuItem1.Name = "openToolStripMenuItem1";
-            this.openToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.openToolStripMenuItem1.Size = new System.Drawing.Size(108, 22);
             this.openToolStripMenuItem1.Text = "Open";
             // 
             // openToolStripMenuItem
@@ -99,7 +102,7 @@
             this.createToolStripMenuItem,
             this.createXMLToolStripMenuItem});
             this.createToolStripMenuItem1.Name = "createToolStripMenuItem1";
-            this.createToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.createToolStripMenuItem1.Size = new System.Drawing.Size(108, 22);
             this.createToolStripMenuItem1.Text = "Create";
             // 
             // createToolStripMenuItem
@@ -124,7 +127,7 @@
             this.saveLittleEndianToolStripMenuItem,
             this.saveBigEndianToolStripMenuItem});
             this.saveToolStripMenuItem1.Name = "saveToolStripMenuItem1";
-            this.saveToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.saveToolStripMenuItem1.Size = new System.Drawing.Size(108, 22);
             this.saveToolStripMenuItem1.Text = "Save";
             // 
             // saveLittleEndianToolStripMenuItem
@@ -147,9 +150,24 @@
             // 
             this.clearToolStripMenuItem.Name = "clearToolStripMenuItem";
             this.clearToolStripMenuItem.ShowShortcutKeys = false;
-            this.clearToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.clearToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
             this.clearToolStripMenuItem.Text = "Clear";
             this.clearToolStripMenuItem.Click += new System.EventHandler(this.ClearToolStripMenuItem_Click);
+            // 
+            // toolsToolStripMenuItem
+            // 
+            this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.yaz0CompressLittleEndianToolStripMenuItem});
+            this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
+            this.toolsToolStripMenuItem.Text = "Tools";
+            // 
+            // yaz0CompressLittleEndianToolStripMenuItem
+            // 
+            this.yaz0CompressLittleEndianToolStripMenuItem.Name = "yaz0CompressLittleEndianToolStripMenuItem";
+            this.yaz0CompressLittleEndianToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
+            this.yaz0CompressLittleEndianToolStripMenuItem.Text = "Yaz0 Compress (Little Endian)";
+            this.yaz0CompressLittleEndianToolStripMenuItem.Click += new System.EventHandler(this.Yaz0CompressLittleEndianToolStripMenuItem_Click);
             // 
             // openFileDialog
             // 
@@ -205,6 +223,8 @@
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem saveLittleEndianToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveBigEndianToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem yaz0CompressLittleEndianToolStripMenuItem;
     }
 }
 

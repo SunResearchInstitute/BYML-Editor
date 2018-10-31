@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Windows.Forms;
 using The4Dimension;
+using Yaz0Enc;
 
 namespace BYML_Editor
 {
@@ -57,6 +58,22 @@ namespace BYML_Editor
             textBox.ReadOnly = true;
         }
 
+        private void Yaz0CompressLittleEndianToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                FileInfo file = new FileInfo(openFileDialog.FileName);
+                
+                saveFileDialog.ShowDialog();
+                if (saveFileDialog.FileName != "")
+                { 
+                    FileInfo selected = new FileInfo(openFileDialog.FileName);
+                    
+                    File.WriteAllBytes(selected.FullName, Yaz0.Encode(file.OpenRead()));
+                }
+            }
+        }
+
         private void ConvertBYML(bool wantXML)
         {
             Directory.CreateDirectory(tempPath.FullName);
@@ -68,7 +85,6 @@ namespace BYML_Editor
                 if (wantXML == false)
                 {
                     System.Diagnostics.Process process = new System.Diagnostics.Process();
-                    if (yamlPath.Exists) yamlPath.Delete();
                     System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo
                     {
                         WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden,
@@ -100,12 +116,11 @@ namespace BYML_Editor
                 FileInfo savePath = new FileInfo(saveFileDialog.FileName);
                 if (IsXML == true)
                 {
-                    if (savePath.Exists) savePath.Delete();
                     File.WriteAllBytes(savePath.FullName, BymlConverter.GetByml(textBox.Text));
+                    //big endian should be auto detected by the `isBigEndian Value`
                 }
                 else
                 {
-                    if (yamlPath.Exists) yamlPath.Delete();
                     File.WriteAllText(yamlPath.FullName, textBox.Text);
                     System.Diagnostics.Process process = new System.Diagnostics.Process();
                     System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo
