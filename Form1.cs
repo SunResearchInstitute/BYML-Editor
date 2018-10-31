@@ -27,6 +27,13 @@ namespace BYML_Editor
             ConvertBYML(true);
         }
 
+        private void CreateToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            textBox.Text = "";
+            textBox.ReadOnly = true;
+            IsXML = false;
+        }
+
         private void CreateXMLToolStripMenuItem_Click(object sender, EventArgs e)
         {
             textBox.Text = "";
@@ -34,11 +41,14 @@ namespace BYML_Editor
             IsXML = true;
         }
 
-        private void CreateToolStripMenuItem_Click_1(object sender, EventArgs e)
+        private void SaveToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
-            textBox.Text = "";
-            textBox.ReadOnly = true;
-            IsXML = false;
+            Save(false);
+        }
+
+        private void SaveBigEndianToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Save(true);
         }
 
         private void ClearToolStripMenuItem_Click(object sender, EventArgs e)
@@ -82,7 +92,7 @@ namespace BYML_Editor
             } 
         }
 
-        private void SaveToolStripMenuItem_Click_1(object sender, EventArgs e)
+        private void Save(bool isBigEndian)
         {
             saveFileDialog.ShowDialog();
             if (saveFileDialog.FileName != "")
@@ -101,40 +111,10 @@ namespace BYML_Editor
                     System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo
                     {
                         WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden,
-                        FileName = "cmd.exe",
-                        Arguments = $"/C yml_to_byml.exe \"{yamlPath.FullName}\" \"{savePath.FullName}\""
+                        FileName = "cmd.exe"
                     };
-                    process.StartInfo = startInfo;
-                    //todo: catch errors somehow
-                    process.Start();
-                    process.WaitForExit();
-                }
-                saveFileDialog.FileName = "";
-            }
-        }
-
-        private void SaveBigEndianToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            saveFileDialog.ShowDialog();
-            if (saveFileDialog.FileName != "")
-            {
-                FileInfo savePath = new FileInfo(saveFileDialog.FileName);
-                if (IsXML == true)
-                {
-                    if (savePath.Exists) savePath.Delete();
-                    File.WriteAllBytes(savePath.FullName, BymlConverter.GetByml(textBox.Text));
-                }
-                else
-                {
-                    if (yamlPath.Exists) yamlPath.Delete();
-                    File.WriteAllText(yamlPath.FullName, textBox.Text);
-                    System.Diagnostics.Process process = new System.Diagnostics.Process();
-                    System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo
-                    {
-                        WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden,
-                        FileName = "cmd.exe",
-                        Arguments = $"/C yml_to_byml.exe \"{yamlPath.FullName}\" \"{savePath.FullName}\" -b"
-                    };
+                    if (isBigEndian == true) startInfo.Arguments = $"/C yml_to_byml.exe \"{yamlPath.FullName}\" \"{savePath.FullName}\" -b";
+                    else startInfo.Arguments = $"/C yml_to_byml.exe \"{yamlPath.FullName}\" \"{savePath.FullName}\"";
                     process.StartInfo = startInfo;
                     //todo: catch errors somehow
                     process.Start();
