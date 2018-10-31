@@ -67,9 +67,11 @@ namespace BYML_Editor
                 saveFileDialog.ShowDialog();
                 if (saveFileDialog.FileName != "")
                 { 
-                    FileInfo selected = new FileInfo(openFileDialog.FileName);
-                    
-                    File.WriteAllBytes(selected.FullName, Yaz0.Encode(file.OpenRead()));
+                    FileInfo selected = new FileInfo(saveFileDialog.FileName);
+
+                    FileStream byml = file.OpenRead();
+                    File.WriteAllBytes(selected.FullName, Yaz0.Encode(byml));
+                    byml.Close();
                 }
             }
         }
@@ -116,8 +118,9 @@ namespace BYML_Editor
                 FileInfo savePath = new FileInfo(saveFileDialog.FileName);
                 if (IsXML == true)
                 {
+                    if (isBigEndian == true) textBox.Text.Replace($"isBigEndian Value=\"False\"", $"isBigEndian Value=\"True\"");
+                    else textBox.Text.Replace($"isBigEndian Value=\"True\"", $"isBigEndian Value=\"False\"");
                     File.WriteAllBytes(savePath.FullName, BymlConverter.GetByml(textBox.Text));
-                    //big endian should be auto detected by the `isBigEndian Value`
                 }
                 else
                 {
