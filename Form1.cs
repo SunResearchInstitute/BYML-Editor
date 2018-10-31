@@ -60,9 +60,9 @@ namespace BYML_Editor
 
         private void Yaz0CompressLittleEndianToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            if (openFileDialogyml.ShowDialog() == DialogResult.OK)
             {
-                FileInfo file = new FileInfo(openFileDialog.FileName);
+                FileInfo file = new FileInfo(openFileDialogyml.FileName);
                 
                 yaz0FileDialog.ShowDialog();
                 if (yaz0FileDialog.FileName != "")
@@ -80,9 +80,13 @@ namespace BYML_Editor
         {
             Directory.CreateDirectory(tempPath.FullName);
 
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            OpenFileDialog byml;
+            if (wantXML == true) byml = openFileDialogxml;
+            else byml = openFileDialogyml;
+
+            if (byml.ShowDialog() == DialogResult.OK)
             {
-                FileInfo selected = new FileInfo(openFileDialog.FileName);
+                FileInfo selected = new FileInfo(openFileDialogyml.FileName);
 
                 if (wantXML == false)
                 {
@@ -105,7 +109,7 @@ namespace BYML_Editor
                     textBox.Text = BymlConverter.GetXml(selected.FullName);
                     IsXML = true;
                 }
-                openFileDialog.FileName = "";
+                openFileDialogyml.FileName = "";
                 textBox.ReadOnly = false;
             } 
         }
