@@ -64,8 +64,8 @@ namespace BYML_Editor
             {
                 FileInfo file = new FileInfo(openFileDialog.FileName);
                 
-                saveFileDialog.ShowDialog();
-                if (saveFileDialog.FileName != "")
+                yaz0FileDialog.ShowDialog();
+                if (yaz0FileDialog.FileName != "")
                 { 
                     FileInfo selected = new FileInfo(saveFileDialog.FileName);
 

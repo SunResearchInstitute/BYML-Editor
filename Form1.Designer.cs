@@ -46,6 +46,7 @@
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.textBox = new System.Windows.Forms.TextBox();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.yaz0FileDialog = new System.Windows.Forms.SaveFileDialog();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -188,6 +189,10 @@
             // 
             this.saveFileDialog.Filter = "BYML Files|*.byml;*.bprm|All files (*.*)|*.*\";";
             // 
+            // yaz0FileDialog
+            // 
+            this.yaz0FileDialog.Filter = "Compressed BYML File|*.sbyml|All files (*.*)|*.*\"";
+            // 
             // Editor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -225,6 +230,7 @@
         private System.Windows.Forms.ToolStripMenuItem saveBigEndianToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem yaz0CompressLittleEndianToolStripMenuItem;
+        private System.Windows.Forms.SaveFileDialog yaz0FileDialog;
     }
 }
 
