@@ -145,5 +145,10 @@ namespace BYML_Editor
                 saveFileDialog.FileName = "";
             }
         }
+
+        private void DecryptToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Splat2Decryptor.Program.NisDecrypt();
+        }
     }
 }

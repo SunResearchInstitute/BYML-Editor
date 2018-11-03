@@ -60,6 +60,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Splat2Decryptor.cs" />
     <Compile Include="TheFourthdimension\BymlConverter.cs" />
     <Compile Include="TheFourthdimension\BymlFormat.cs" />
     <Compile Include="TheFourthdimension\CustomClasses.cs" />

@@ -48,6 +48,7 @@
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.yaz0FileDialog = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialogxml = new System.Windows.Forms.OpenFileDialog();
+            this.decryptToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -159,7 +160,8 @@
             // toolsToolStripMenuItem
             // 
             this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.yaz0CompressLittleEndianToolStripMenuItem});
+            this.yaz0CompressLittleEndianToolStripMenuItem,
+            this.decryptToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
             this.toolsToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
             this.toolsToolStripMenuItem.Text = "Tools";
@@ -197,6 +199,13 @@
             // openFileDialogxml
             // 
             this.openFileDialogxml.Filter = "BYML Files|*.byml;*.bprm|All files (*.*)|*.*\"";
+            // 
+            // decryptToolStripMenuItem
+            // 
+            this.decryptToolStripMenuItem.Name = "decryptToolStripMenuItem";
+            this.decryptToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
+            this.decryptToolStripMenuItem.Text = "Decrypt Nisasyst files";
+            this.decryptToolStripMenuItem.Click += new System.EventHandler(this.DecryptToolStripMenuItem_Click);
             // 
             // Editor
             // 
@@ -237,6 +246,7 @@
         private System.Windows.Forms.ToolStripMenuItem yaz0CompressLittleEndianToolStripMenuItem;
         private System.Windows.Forms.SaveFileDialog yaz0FileDialog;
         private System.Windows.Forms.OpenFileDialog openFileDialogxml;
+        private System.Windows.Forms.ToolStripMenuItem decryptToolStripMenuItem;
     }
 }
 
