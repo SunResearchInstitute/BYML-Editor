@@ -43,12 +43,12 @@
             this.clearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.yaz0CompressLittleEndianToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.decryptToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialogyml = new System.Windows.Forms.OpenFileDialog();
             this.textBox = new System.Windows.Forms.TextBox();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.yaz0FileDialog = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialogxml = new System.Windows.Forms.OpenFileDialog();
-            this.decryptToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -80,7 +80,7 @@
             this.openToolStripMenuItem,
             this.openXMLDisplayToolStripMenuItem});
             this.openToolStripMenuItem1.Name = "openToolStripMenuItem1";
-            this.openToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.openToolStripMenuItem1.Size = new System.Drawing.Size(108, 22);
             this.openToolStripMenuItem1.Text = "Open";
             // 
             // openToolStripMenuItem
@@ -105,7 +105,7 @@
             this.createToolStripMenuItem,
             this.createXMLToolStripMenuItem});
             this.createToolStripMenuItem1.Name = "createToolStripMenuItem1";
-            this.createToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.createToolStripMenuItem1.Size = new System.Drawing.Size(108, 22);
             this.createToolStripMenuItem1.Text = "Create";
             // 
             // createToolStripMenuItem
@@ -130,7 +130,7 @@
             this.saveLittleEndianToolStripMenuItem,
             this.saveBigEndianToolStripMenuItem});
             this.saveToolStripMenuItem1.Name = "saveToolStripMenuItem1";
-            this.saveToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.saveToolStripMenuItem1.Size = new System.Drawing.Size(108, 22);
             this.saveToolStripMenuItem1.Text = "Save";
             // 
             // saveLittleEndianToolStripMenuItem
@@ -153,7 +153,7 @@
             // 
             this.clearToolStripMenuItem.Name = "clearToolStripMenuItem";
             this.clearToolStripMenuItem.ShowShortcutKeys = false;
-            this.clearToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.clearToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
             this.clearToolStripMenuItem.Text = "Clear";
             this.clearToolStripMenuItem.Click += new System.EventHandler(this.ClearToolStripMenuItem_Click);
             // 
@@ -172,6 +172,13 @@
             this.yaz0CompressLittleEndianToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
             this.yaz0CompressLittleEndianToolStripMenuItem.Text = "Yaz0 Compress (Little Endian)";
             this.yaz0CompressLittleEndianToolStripMenuItem.Click += new System.EventHandler(this.Yaz0CompressLittleEndianToolStripMenuItem_Click);
+            // 
+            // decryptToolStripMenuItem
+            // 
+            this.decryptToolStripMenuItem.Name = "decryptToolStripMenuItem";
+            this.decryptToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
+            this.decryptToolStripMenuItem.Text = "Decrypt Nisasyst files";
+            this.decryptToolStripMenuItem.Click += new System.EventHandler(this.DecryptToolStripMenuItem_Click);
             // 
             // openFileDialogyml
             // 
@@ -199,13 +206,6 @@
             // openFileDialogxml
             // 
             this.openFileDialogxml.Filter = "BYML Files|*.byml;*.bprm|All files (*.*)|*.*\"";
-            // 
-            // decryptToolStripMenuItem
-            // 
-            this.decryptToolStripMenuItem.Name = "decryptToolStripMenuItem";
-            this.decryptToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
-            this.decryptToolStripMenuItem.Text = "Decrypt Nisasyst files";
-            this.decryptToolStripMenuItem.Click += new System.EventHandler(this.DecryptToolStripMenuItem_Click);
             // 
             // Editor
             // 
