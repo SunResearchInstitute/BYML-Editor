@@ -1,26 +1,48 @@
+/*
+MIT License
+
+Copyright (c) 2018 Somebody Whoisbored
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Text;
-using System.Windows;
-using Microsoft.WindowsAPICodePack.Dialogs;
+using System.Windows.Forms;
+
 
 namespace Splat2Decryptor
 {
     class Program
     {
         [STAThread]
-        static void Main(string[] args)
+        public static void NisDecrypt()
         {
-            CommonOpenFileDialog dialog = new CommonOpenFileDialog();
-            dialog.IsFolderPicker = true;
-            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+            FolderBrowserDialog dialog = new FolderBrowserDialog();
+            if (dialog.ShowDialog() == DialogResult.OK)
             {
                 if (!File.Exists("./nisasyst.py"))
                 {
-                    Console.WriteLine("Requesting SciresM's decryption script...");
                     new WebClient().DownloadFile("https://gist.githubusercontent.com/SciresM/dba70bc2ee7eca11e1bd777ecb58ff16/raw/5bbca5d062d3d5fdb2b8507fe6d323b318be2d20/nisasyst.py", "nisasyst.py");
                 }
                 if (!IsPythonInstalled())
@@ -28,9 +50,8 @@ namespace Splat2Decryptor
                     MessageBox.Show("You don't have Python installed! Go install the latest Python 2.");
                     Environment.Exit(1);
                 }
-                Console.WriteLine("Installing pycrypto");
                 InstallPyCrypto();
-                string path = dialog.FileName;
+                string path = dialog.SelectedPath;
                 Directory.CreateDirectory($"./dec/");
                 string result;
                 foreach (string file in FindFilesRecursively(path))
@@ -39,15 +60,13 @@ namespace Splat2Decryptor
                     string output = $"./dec/{relativefile}";
                     Directory.CreateDirectory(new FileInfo(output).Directory.FullName);
                     result = RunPythonCommand($"nisasyst.py \"{file}\" \"{relativefile}\" \"{output}\"");
-                    if (result.Contains("Error: Input appears not to be an encrypted Splatoon 2 archive!"))
-                        Console.WriteLine($"Skipping {relativefile}...");
-                    else if (result.Contains("Traceback"))
+                    if (result.Contains("Traceback"))
                     {
                         File.WriteAllText("./error.txt", result);
                         MessageBox.Show("Unknown error occured! Saved log to error.txt");
                         Environment.Exit(1);
-                    } else
-                        Console.WriteLine($"Decrypted {relativefile}");
+                    }
+                    else MessageBox.Show($"Decrypted {relativefile}");
                 }
             }
         }
@@ -141,15 +160,17 @@ namespace Splat2Decryptor
 
         static string RunCommand(string command)
         {
-            ProcessStartInfo info = new ProcessStartInfo();
-            info.FileName = "cmd.exe";
-            info.Arguments = "/C " + command;
-            info.UseShellExecute = false;
-            info.RedirectStandardInput = true;
-            info.RedirectStandardOutput = true;
-            info.RedirectStandardError = true;
-            info.CreateNoWindow = true;
-            
+            ProcessStartInfo info = new ProcessStartInfo
+            {
+                FileName = "cmd.exe",
+                Arguments = "/C " + command,
+                UseShellExecute = false,
+                RedirectStandardInput = true,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                CreateNoWindow = true
+            };
+
 
             using (Process process = Process.Start(info))
             {
