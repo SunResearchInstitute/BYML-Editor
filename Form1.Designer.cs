@@ -44,11 +44,12 @@
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.yaz0CompressLittleEndianToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.decryptToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openFileDialogyml = new System.Windows.Forms.OpenFileDialog();
+            this.openymlFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.textBox = new System.Windows.Forms.TextBox();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.yaz0FileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.openFileDialogxml = new System.Windows.Forms.OpenFileDialog();
+            this.saveyaz0FileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.openxmlFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.gamefolderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -180,9 +181,9 @@
             this.decryptToolStripMenuItem.Text = "Decrypt Nisasyst files";
             this.decryptToolStripMenuItem.Click += new System.EventHandler(this.DecryptToolStripMenuItem_Click);
             // 
-            // openFileDialogyml
+            // openymlFileDialog
             // 
-            this.openFileDialogyml.Filter = "BYML Files|*.byml;*.sbyml;*.bprm|All files (*.*)|*.*\"";
+            this.openymlFileDialog.Filter = "BYML Files|*.byml;*.sbyml;*.bprm|All files (*.*)|*.*\"";
             // 
             // textBox
             // 
@@ -199,13 +200,17 @@
             // 
             this.saveFileDialog.Filter = "BYML Files|*.byml;*.bprm|All files (*.*)|*.*\"";
             // 
-            // yaz0FileDialog
+            // saveyaz0FileDialog
             // 
-            this.yaz0FileDialog.Filter = "Compressed BYML File|*.sbyml|All files (*.*)|*.*\"";
+            this.saveyaz0FileDialog.Filter = "Compressed BYML File|*.sbyml|All files (*.*)|*.*\"";
             // 
-            // openFileDialogxml
+            // openxmlFileDialog
             // 
-            this.openFileDialogxml.Filter = "BYML Files|*.byml;*.bprm|All files (*.*)|*.*\"";
+            this.openxmlFileDialog.Filter = "BYML Files|*.byml;*.bprm|All files (*.*)|*.*\"";
+            // 
+            // gamefolderBrowserDialog
+            // 
+            this.gamefolderBrowserDialog.ShowNewFolderButton = false;
             // 
             // Editor
             // 
@@ -229,7 +234,7 @@
 
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
-        private System.Windows.Forms.OpenFileDialog openFileDialogyml;
+        private System.Windows.Forms.OpenFileDialog openymlFileDialog;
         private System.Windows.Forms.TextBox textBox;
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
         private System.Windows.Forms.ToolStripMenuItem clearToolStripMenuItem;
@@ -244,9 +249,10 @@
         private System.Windows.Forms.ToolStripMenuItem saveBigEndianToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem yaz0CompressLittleEndianToolStripMenuItem;
-        private System.Windows.Forms.SaveFileDialog yaz0FileDialog;
-        private System.Windows.Forms.OpenFileDialog openFileDialogxml;
+        private System.Windows.Forms.SaveFileDialog saveyaz0FileDialog;
+        private System.Windows.Forms.OpenFileDialog openxmlFileDialog;
         private System.Windows.Forms.ToolStripMenuItem decryptToolStripMenuItem;
+        private System.Windows.Forms.FolderBrowserDialog gamefolderBrowserDialog;
     }
 }
 

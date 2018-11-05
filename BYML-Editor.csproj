@@ -52,6 +52,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="NisasystSharp\NisasystSharp.cs" />
+    <Compile Include="NisasystSharp\Crc32.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -60,7 +62,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Splat2Decryptor\Splat2Decryptor.cs" />
+    <Compile Include="NisasystSharp\SeadRandom.cs" />
     <Compile Include="TheFourthdimension\BymlConverter.cs" />
     <Compile Include="TheFourthdimension\BymlFormat.cs" />
     <Compile Include="TheFourthdimension\CustomClasses.cs" />

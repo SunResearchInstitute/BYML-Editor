@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
 using The4Dimension;
@@ -60,12 +61,12 @@ namespace BYML_Editor
 
         private void Yaz0CompressLittleEndianToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (openFileDialogyml.ShowDialog() == DialogResult.OK)
+            if (openymlFileDialog.ShowDialog() == DialogResult.OK)
             {
-                FileInfo file = new FileInfo(openFileDialogyml.FileName);
+                FileInfo file = new FileInfo(openymlFileDialog.FileName);
                 
-                yaz0FileDialog.ShowDialog();
-                if (yaz0FileDialog.FileName != "")
+                saveyaz0FileDialog.ShowDialog();
+                if (saveyaz0FileDialog.FileName != "")
                 { 
                     FileInfo selected = new FileInfo(saveFileDialog.FileName);
 
@@ -81,12 +82,12 @@ namespace BYML_Editor
             Directory.CreateDirectory(tempPath.FullName);
 
             OpenFileDialog byml;
-            if (wantXML == true) byml = openFileDialogxml;
-            else byml = openFileDialogyml;
+            if (wantXML == true) byml = openxmlFileDialog;
+            else byml = openymlFileDialog;
 
             if (byml.ShowDialog() == DialogResult.OK)
             {
-                FileInfo selected = new FileInfo(openFileDialogyml.FileName);
+                FileInfo selected = new FileInfo(openymlFileDialog.FileName);
 
                 if (wantXML == false)
                 {
@@ -109,7 +110,7 @@ namespace BYML_Editor
                     textBox.Text = BymlConverter.GetXml(selected.FullName);
                     IsXML = true;
                 }
-                openFileDialogyml.FileName = "";
+                openymlFileDialog.FileName = "";
                 textBox.ReadOnly = false;
             } 
         }
@@ -148,7 +149,17 @@ namespace BYML_Editor
 
         private void DecryptToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Splat2Decryptor.Program.NisDecrypt();
+            if (openxmlFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                DialogResult result = gamefolderBrowserDialog.ShowDialog();
+
+                if (result == DialogResult.OK)
+                {
+                    string relativefile = openxmlFileDialog.FileName.Replace(gamefolderBrowserDialog.SelectedPath, "").Replace('\\', '/').Substring(1);
+                    List<string> args = new List<string>(new string[] { gamefolderBrowserDialog.SelectedPath, relativefile });
+                    NisasystSharp.NisasystSharp.Main(args.ToArray());
+                }
+            }
         }
     }
 }
