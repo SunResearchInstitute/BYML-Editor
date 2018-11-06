@@ -110,7 +110,7 @@ namespace BYML_Editor
                     textBox.Text = BymlConverter.GetXml(selected.FullName);
                     IsXML = true;
                 }
-                openymlFileDialog.FileName = "";
+                byml.FileName = "";
                 textBox.ReadOnly = false;
             } 
         }
@@ -156,7 +156,7 @@ namespace BYML_Editor
                 if (result == DialogResult.OK)
                 {
                     string relativefile = openxmlFileDialog.FileName.Replace(gamefolderBrowserDialog.SelectedPath, "").Replace('\\', '/').Substring(1);
-                    List<string> args = new List<string>(new string[] { gamefolderBrowserDialog.SelectedPath, relativefile });
+                    List<string> args = new List<string>(new string[] { relativefile, openxmlFileDialog.FileName });
                     NisasystSharp.NisasystSharp.Main(args.ToArray());
                 }
             }
