@@ -10,8 +10,8 @@ namespace BYML_Editor
 
     public partial class Editor : Form
     {
-        static DirectoryInfo tempPath = new DirectoryInfo($"{Path.GetTempPath()}/BYML-Editor");
-        static FileInfo yamlPath = new FileInfo($"{Path.GetTempPath()}/BYML-Editor/temp.yaml");
+        static DirectoryInfo tempPath => new DirectoryInfo($"{Path.GetTempPath()}/BYML-Editor");
+        static FileInfo yamlPath => new FileInfo($"{Path.GetTempPath()}/BYML-Editor/temp.yaml");
         private bool IsXML;
 
         public Editor()
