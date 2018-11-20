@@ -10,13 +10,14 @@ namespace BYML_Editor
 
     public partial class Editor : Form
     {
-        static DirectoryInfo tempPath => new DirectoryInfo($"{Path.GetTempPath()}/BYML-Editor");
-        static FileInfo yamlPath => new FileInfo($"{Path.GetTempPath()}/BYML-Editor/temp.yaml");
+        static DirectoryInfo TempPath = new DirectoryInfo($"{Path.GetTempPath()}/BYML-Editor");
+        static FileInfo YamlPath = new FileInfo($"{Path.GetTempPath()}/BYML-Editor/temp.yaml");
         private bool IsXML;
 
         public Editor()
         {
             InitializeComponent();
+            AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnProcessExit);
         }
 
         private void OpenYAMLDisplayToolStripMenuItem_Click(object sender, EventArgs e)
@@ -79,15 +80,15 @@ namespace BYML_Editor
 
         private void ConvertBYML(bool wantXML)
         {
-            Directory.CreateDirectory(tempPath.FullName);
+            Directory.CreateDirectory(TempPath.FullName);
 
-            OpenFileDialog byml;
-            if (wantXML == true) byml = openxmlFileDialog;
-            else byml = openymlFileDialog;
+            OpenFileDialog bymlselect;
+            if (wantXML == true) bymlselect = openxmlFileDialog;
+            else bymlselect = openymlFileDialog;
 
-            if (byml.ShowDialog() == DialogResult.OK)
+            if (bymlselect.ShowDialog() == DialogResult.OK)
             {
-                FileInfo selected = new FileInfo(openymlFileDialog.FileName);
+                FileInfo selected = new FileInfo(bymlselect.FileName);
 
                 if (wantXML == false)
                 {
@@ -96,13 +97,13 @@ namespace BYML_Editor
                     {
                         WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden,
                         FileName = "cmd.exe",
-                        Arguments = $"/C byml_to_yml.exe \"{selected.FullName}\" \"{yamlPath.FullName}\""
+                        Arguments = $"/C byml_to_yml.exe \"{selected.FullName}\" \"{YamlPath.FullName}\""
                     };
                     process.StartInfo = startInfo;
                     process.Start();
                     process.WaitForExit();
 
-                    textBox.Text = File.ReadAllText(yamlPath.FullName);
+                    textBox.Text = File.ReadAllText(YamlPath.FullName);
                     IsXML = false;
                 }
                 else
@@ -110,7 +111,7 @@ namespace BYML_Editor
                     textBox.Text = BymlConverter.GetXml(selected.FullName);
                     IsXML = true;
                 }
-                byml.FileName = "";
+                bymlselect.FileName = "";
                 textBox.ReadOnly = false;
             } 
         }
@@ -129,15 +130,15 @@ namespace BYML_Editor
                 }
                 else
                 {
-                    File.WriteAllText(yamlPath.FullName, textBox.Text);
+                    File.WriteAllText(YamlPath.FullName, textBox.Text);
                     System.Diagnostics.Process process = new System.Diagnostics.Process();
                     System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo
                     {
                         WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden,
                         FileName = "cmd.exe"
                     };
-                    if (isBigEndian == true) startInfo.Arguments = $"/C yml_to_byml.exe \"{yamlPath.FullName}\" \"{savePath.FullName}\" -b";
-                    else startInfo.Arguments = $"/C yml_to_byml.exe \"{yamlPath.FullName}\" \"{savePath.FullName}\"";
+                    if (isBigEndian == true) startInfo.Arguments = $"/C yml_to_byml.exe \"{YamlPath.FullName}\" \"{savePath.FullName}\" -b";
+                    else startInfo.Arguments = $"/C yml_to_byml.exe \"{YamlPath.FullName}\" \"{savePath.FullName}\"";
                     process.StartInfo = startInfo;
                     //todo: catch errors somehow
                     process.Start();
@@ -157,9 +158,14 @@ namespace BYML_Editor
                 {
                     string relativefile = openxmlFileDialog.FileName.Replace(gamefolderBrowserDialog.SelectedPath, "").Replace('\\', '/').Substring(1);
                     List<string> args = new List<string>(new string[] { relativefile, openxmlFileDialog.FileName });
-                    NisasystSharp.NisasystSharp.Main(args.ToArray());
+                    NisasystSharp.NisasystSharp.Decrypt(args.ToArray());
                 }
             }
+        }
+
+        static void OnProcessExit(object sender, EventArgs e)
+        {
+            if (TempPath.Exists) TempPath.Delete(true);
         }
     }
 }

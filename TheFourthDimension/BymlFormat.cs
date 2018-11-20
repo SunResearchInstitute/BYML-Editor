@@ -12,8 +12,8 @@ namespace BymlFormat
         public StringTable NodeNames;
         public StringTable StringRes;
         public GenericNode RootNode;
-        bool BigEndian = false; //Big endian: Wii U, Little Endian: 3DS
-        UInt16 Version = 1;
+        readonly bool BigEndian = false; //Big endian: Wii U, Little Endian: 3DS
+        readonly UInt16 Version = 1;
 
         public BymlFile(byte[] data)
         {
@@ -152,12 +152,12 @@ namespace BymlFormat
         }
 
 
-        void debugData(BinaryWriter bin) //Prints last 16 bytes of the stream
+        void DebugData(BinaryWriter bin) //Prints last 16 bytes of the stream
         {
             BinaryReader rd = new BinaryReader(bin.BaseStream);
             rd.BaseStream.Position = rd.BaseStream.Length - 16;
             byte[] data = rd.ReadBytes(16);
-            HelpFunctions.debugBytes(data);
+            HelpFunctions.DebugBytes(data);
         }
 
         void WriteStringTable(StringTable tbl, BinaryWriter bin, UInt32 UpdateOffset)
@@ -373,10 +373,12 @@ namespace BymlFormat
             while ((bin.BaseStream.Position % 4) != 0) bin.ReadByte(); //Padding
             for (int i = 0; i < Count; i++)
             {
-               // Debug.Print("ARRAY SUBNODE AT: " + HelpFunctions.GetHexString((int)bin.BaseStream.Position));
-                GenericNode g = new GenericNode();
-                g.NodeType = NodeTypes[i];
-                g.Value = bin.ReadBytes(4);
+                // Debug.Print("ARRAY SUBNODE AT: " + HelpFunctions.GetHexString((int)bin.BaseStream.Position));
+                GenericNode g = new GenericNode
+                {
+                    NodeType = NodeTypes[i],
+                    Value = bin.ReadBytes(4)
+                };
                 if (g.NodeType == 0xC1)
                 {
                     long OldPos = bin.BaseStream.Position;
@@ -522,7 +524,7 @@ namespace BymlFormat
             return Res.ToArray();
         }
 
-        public static void debugBytes(byte[] Data)
+        public static void DebugBytes(byte[] Data)
         {
             string Value = "";
             for (int ii = 0; ii < Data.Length; ii++) Value += " 0x" + GetHexString(Data[ii]);

@@ -8,11 +8,11 @@ namespace NisasystSharp
     class NisasystSharp
     {
         private static string KeyMaterialString = "e413645fa69cafe34a76192843e48cbd691d1f9fba87e8a23d40e02ce13b0d534d10301576f31bc70b763a60cf07149cfca50e2a6b3955b98f26ca84a5844a8aeca7318f8d7dba406af4e45c4806fa4d7b736d51cceaaf0e96f657bb3a8af9b175d51b9bddc1ed475677260f33c41ddbc1ee30b46c4df1b24a25cf7cb6019794";
-        private static char[] KeyMaterial = KeyMaterialString.ToCharArray();
+        private static readonly char[] KeyMaterial = KeyMaterialString.ToCharArray();
 
-        private static string MagicNumbers = "nisasyst";
+        private static readonly string MagicNumbers = "nisasyst";
 
-        public static void Main(string[] args)
+        public static void Decrypt(string[] args)
         {
             using (FileStream fileStream = new FileStream(args[1], FileMode.Open))
             using (StreamReader streamReader = new StreamReader(fileStream))
