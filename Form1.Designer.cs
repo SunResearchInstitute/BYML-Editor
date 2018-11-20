@@ -44,8 +44,10 @@
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.yaz0CompressLittleEndianToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.decryptToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openymlFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.textBox = new System.Windows.Forms.TextBox();
+            this.debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.disableDeletingTempFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openyamlFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.bymltext = new System.Windows.Forms.TextBox();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.saveyaz0FileDialog = new System.Windows.Forms.SaveFileDialog();
             this.openxmlFileDialog = new System.Windows.Forms.OpenFileDialog();
@@ -57,7 +59,8 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.toolsToolStripMenuItem});
+            this.toolsToolStripMenuItem,
+            this.debugToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(800, 24);
@@ -138,16 +141,16 @@
             // 
             this.saveLittleEndianToolStripMenuItem.Name = "saveLittleEndianToolStripMenuItem";
             this.saveLittleEndianToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveLittleEndianToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
-            this.saveLittleEndianToolStripMenuItem.Text = "Save (Little Endian)";
+            this.saveLittleEndianToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
+            this.saveLittleEndianToolStripMenuItem.Text = "Save (little endian)";
             this.saveLittleEndianToolStripMenuItem.Click += new System.EventHandler(this.SaveLittleEndianToolStripMenuItem_Click);
             // 
             // saveBigEndianToolStripMenuItem
             // 
             this.saveBigEndianToolStripMenuItem.Name = "saveBigEndianToolStripMenuItem";
             this.saveBigEndianToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.S)));
-            this.saveBigEndianToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
-            this.saveBigEndianToolStripMenuItem.Text = "Save (Big Endian)";
+            this.saveBigEndianToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
+            this.saveBigEndianToolStripMenuItem.Text = "Save (big endian)";
             this.saveBigEndianToolStripMenuItem.Click += new System.EventHandler(this.SaveBigEndianToolStripMenuItem_Click);
             // 
             // clearToolStripMenuItem
@@ -170,31 +173,50 @@
             // yaz0CompressLittleEndianToolStripMenuItem
             // 
             this.yaz0CompressLittleEndianToolStripMenuItem.Name = "yaz0CompressLittleEndianToolStripMenuItem";
-            this.yaz0CompressLittleEndianToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
-            this.yaz0CompressLittleEndianToolStripMenuItem.Text = "Yaz0 Compress (Little Endian)";
+            this.yaz0CompressLittleEndianToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
+            this.yaz0CompressLittleEndianToolStripMenuItem.Text = "Yaz0 Compress (little endian)";
             this.yaz0CompressLittleEndianToolStripMenuItem.Click += new System.EventHandler(this.Yaz0CompressLittleEndianToolStripMenuItem_Click);
             // 
             // decryptToolStripMenuItem
             // 
             this.decryptToolStripMenuItem.Name = "decryptToolStripMenuItem";
-            this.decryptToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
+            this.decryptToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
             this.decryptToolStripMenuItem.Text = "Decrypt Nisasyst files";
             this.decryptToolStripMenuItem.Click += new System.EventHandler(this.DecryptToolStripMenuItem_Click);
             // 
-            // openymlFileDialog
+            // debugToolStripMenuItem
             // 
-            this.openymlFileDialog.Filter = "BYML Files|*.byml;*.sbyml;*.bprm|All files (*.*)|*.*\"";
+            this.debugToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.disableDeletingTempFolderToolStripMenuItem});
+            this.debugToolStripMenuItem.Name = "debugToolStripMenuItem";
+            this.debugToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
+            this.debugToolStripMenuItem.Text = "Debug";
+            this.debugToolStripMenuItem.Visible = false;
             // 
-            // textBox
+            // disableDeletingTempFolderToolStripMenuItem
             // 
-            this.textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox.Location = new System.Drawing.Point(12, 27);
-            this.textBox.Multiline = true;
-            this.textBox.Name = "textBox";
-            this.textBox.ReadOnly = true;
-            this.textBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox.Size = new System.Drawing.Size(776, 411);
-            this.textBox.TabIndex = 1;
+            this.disableDeletingTempFolderToolStripMenuItem.Name = "disableDeletingTempFolderToolStripMenuItem";
+            this.disableDeletingTempFolderToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
+            this.disableDeletingTempFolderToolStripMenuItem.Text = "Disable deleting temporary folder";
+            this.disableDeletingTempFolderToolStripMenuItem.Click += new System.EventHandler(this.DisableDeletingTempFolderToolStripMenuItem_Click);
+            // 
+            // openyamlFileDialog
+            // 
+            this.openyamlFileDialog.Filter = "BYML Files|*.byml;*.sbyml;*.bprm|All files (*.*)|*.*\"";
+            // 
+            // bymltext
+            // 
+            this.bymltext.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.bymltext.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bymltext.Location = new System.Drawing.Point(12, 27);
+            this.bymltext.Multiline = true;
+            this.bymltext.Name = "bymltext";
+            this.bymltext.ReadOnly = true;
+            this.bymltext.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.bymltext.Size = new System.Drawing.Size(776, 411);
+            this.bymltext.TabIndex = 1;
             // 
             // saveFileDialog
             // 
@@ -210,6 +232,7 @@
             // 
             // gamefolderBrowserDialog
             // 
+            this.gamefolderBrowserDialog.Description = "Select your Splatoon 2 romfs";
             this.gamefolderBrowserDialog.ShowNewFolderButton = false;
             // 
             // Editor
@@ -217,7 +240,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.textBox);
+            this.Controls.Add(this.bymltext);
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
@@ -234,8 +257,8 @@
 
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
-        private System.Windows.Forms.OpenFileDialog openymlFileDialog;
-        private System.Windows.Forms.TextBox textBox;
+        private System.Windows.Forms.OpenFileDialog openyamlFileDialog;
+        private System.Windows.Forms.TextBox bymltext;
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
         private System.Windows.Forms.ToolStripMenuItem clearToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem1;
@@ -253,6 +276,8 @@
         private System.Windows.Forms.OpenFileDialog openxmlFileDialog;
         private System.Windows.Forms.ToolStripMenuItem decryptToolStripMenuItem;
         private System.Windows.Forms.FolderBrowserDialog gamefolderBrowserDialog;
+        private System.Windows.Forms.ToolStripMenuItem debugToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem disableDeletingTempFolderToolStripMenuItem;
     }
 }
 

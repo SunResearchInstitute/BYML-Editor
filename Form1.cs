@@ -7,17 +7,38 @@ using Yaz0Enc;
 
 namespace BYML_Editor
 {
-
     public partial class Editor : Form
     {
         static DirectoryInfo TempPath = new DirectoryInfo($"{Path.GetTempPath()}/BYML-Editor");
         static FileInfo YamlPath = new FileInfo($"{Path.GetTempPath()}/BYML-Editor/temp.yaml");
-        private bool IsXML;
+        private bool isXML;
+#if DEBUG
+        private static bool deletetemp = true;
+#endif
 
         public Editor()
         {
             InitializeComponent();
+#if DEBUG
+            debugToolStripMenuItem.Visible = true;
+#endif
             AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnProcessExit);
+        }
+
+        private void DisableDeletingTempFolderToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+#if DEBUG
+            if (deletetemp)
+            {
+                deletetemp = false;
+                disableDeletingTempFolderToolStripMenuItem.Text = "Enable deleting temporary folder";
+            }
+            else
+            {
+                deletetemp = true;
+                disableDeletingTempFolderToolStripMenuItem.Text = "Disable deleting temporary folder";
+            }
+#endif
         }
 
         private void OpenYAMLDisplayToolStripMenuItem_Click(object sender, EventArgs e)
@@ -32,39 +53,41 @@ namespace BYML_Editor
 
         private void CreateYAMLToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            textBox.Text = "";
-            textBox.ReadOnly = true;
-            IsXML = false;
+            bymltext.Text = "";
+            bymltext.ReadOnly = false;
+            isXML = false;
         }
 
         private void CreateXMLToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            textBox.Text = "";
-            textBox.ReadOnly = false;
-            IsXML = true;
+            bymltext.Text = "";
+            bymltext.ReadOnly = false;
+            isXML = true;
         }
 
         private void SaveLittleEndianToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Save(false);
+            if (string.IsNullOrWhiteSpace(bymltext.Text)) MessageBox.Show("The text box is blank.", "No BYML file", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            else Save(false);
         }
 
         private void SaveBigEndianToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Save(true);
+            if (string.IsNullOrWhiteSpace(bymltext.Text)) MessageBox.Show("The text box is blank.", "No BYML file", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            else Save(true);
         }
 
         private void ClearToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            textBox.Text = "";
-            textBox.ReadOnly = true;
+            bymltext.Text = "";
+            bymltext.ReadOnly = true;
         }
 
         private void Yaz0CompressLittleEndianToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (openymlFileDialog.ShowDialog() == DialogResult.OK)
+            if (openxmlFileDialog.ShowDialog() == DialogResult.OK)
             {
-                FileInfo file = new FileInfo(openymlFileDialog.FileName);
+                FileInfo file = new FileInfo(openyamlFileDialog.FileName);
                 
                 saveyaz0FileDialog.ShowDialog();
                 if (saveyaz0FileDialog.FileName != "")
@@ -84,7 +107,7 @@ namespace BYML_Editor
 
             OpenFileDialog bymlselect;
             if (wantXML == true) bymlselect = openxmlFileDialog;
-            else bymlselect = openymlFileDialog;
+            else bymlselect = openyamlFileDialog;
 
             if (bymlselect.ShowDialog() == DialogResult.OK)
             {
@@ -103,16 +126,16 @@ namespace BYML_Editor
                     process.Start();
                     process.WaitForExit();
 
-                    textBox.Text = File.ReadAllText(YamlPath.FullName);
-                    IsXML = false;
+                    bymltext.Text = File.ReadAllText(YamlPath.FullName);
+                    isXML = false;
                 }
                 else
                 {
-                    textBox.Text = BymlConverter.GetXml(selected.FullName);
-                    IsXML = true;
+                    bymltext.Text = BymlConverter.GetXml(selected.FullName);
+                    isXML = true;
                 }
                 bymlselect.FileName = "";
-                textBox.ReadOnly = false;
+                bymltext.ReadOnly = false;
             } 
         }
 
@@ -122,15 +145,15 @@ namespace BYML_Editor
             if (saveFileDialog.FileName != "")
             {
                 FileInfo savePath = new FileInfo(saveFileDialog.FileName);
-                if (IsXML == true)
+                if (isXML == true)
                 {
-                    if (isBigEndian == true) textBox.Text.Replace($"isBigEndian Value=\"False\"", $"isBigEndian Value=\"True\"");
-                    else textBox.Text.Replace($"isBigEndian Value=\"True\"", $"isBigEndian Value=\"False\"");
-                    File.WriteAllBytes(savePath.FullName, BymlConverter.GetByml(textBox.Text));
+                    if (isBigEndian == true) bymltext.Text.Replace($"isBigEndian Value=\"False\"", $"isBigEndian Value=\"True\"");
+                    else bymltext.Text.Replace($"isBigEndian Value=\"True\"", $"isBigEndian Value=\"False\"");
+                    File.WriteAllBytes(savePath.FullName, BymlConverter.GetByml(bymltext.Text));
                 }
                 else
                 {
-                    File.WriteAllText(YamlPath.FullName, textBox.Text);
+                    File.WriteAllText(YamlPath.FullName, bymltext.Text);
                     System.Diagnostics.Process process = new System.Diagnostics.Process();
                     System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo
                     {
@@ -150,6 +173,7 @@ namespace BYML_Editor
 
         private void DecryptToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            openxmlFileDialog.Title = "Select your BYML inside the Splatoon 2 romfs";
             if (openxmlFileDialog.ShowDialog() == DialogResult.OK)
             {
                 DialogResult result = gamefolderBrowserDialog.ShowDialog();
@@ -161,11 +185,19 @@ namespace BYML_Editor
                     NisasystSharp.NisasystSharp.Decrypt(args.ToArray());
                 }
             }
+            openxmlFileDialog.FileName = "";
+            openxmlFileDialog.Title = "";
         }
 
         static void OnProcessExit(object sender, EventArgs e)
         {
+#if DEBUG
+            if (TempPath.Exists && deletetemp) TempPath.Delete(true);
+#endif
+
+#if (!DEBUG)
             if (TempPath.Exists) TempPath.Delete(true);
+#endif
         }
     }
 }
