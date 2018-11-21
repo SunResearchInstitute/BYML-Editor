@@ -192,12 +192,10 @@ namespace BYML_Editor
         static void OnProcessExit(object sender, EventArgs e)
         {
 #if DEBUG
-            if (TempPath.Exists && deletetemp) TempPath.Delete(true);
+            if (deletetemp)
 #endif
-
-#if (!DEBUG)
-            if (TempPath.Exists) TempPath.Delete(true);
-#endif
+                if (TempPath.Exists)
+                    TempPath.Delete(true);
         }
     }
 }
