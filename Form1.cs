@@ -88,10 +88,10 @@ namespace BYML_Editor
             if (openxmlFileDialog.ShowDialog() == DialogResult.OK)
             {
                 FileInfo file = new FileInfo(openyamlFileDialog.FileName);
-                
+
                 saveyaz0FileDialog.ShowDialog();
                 if (saveyaz0FileDialog.FileName != "")
-                { 
+                {
                     FileInfo selected = new FileInfo(saveFileDialog.FileName);
 
                     FileStream byml = file.OpenRead();
@@ -136,7 +136,7 @@ namespace BYML_Editor
                 }
                 bymlselect.FileName = "";
                 bymltext.ReadOnly = false;
-            } 
+            }
         }
 
         private void Save(bool isBigEndian)
