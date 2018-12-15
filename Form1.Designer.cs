@@ -89,7 +89,7 @@
             this.openToolStripMenuItem,
             this.openXMLDisplayToolStripMenuItem});
             this.openToolStripMenuItem1.Name = "openToolStripMenuItem1";
-            this.openToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.openToolStripMenuItem1.Size = new System.Drawing.Size(108, 22);
             this.openToolStripMenuItem1.Text = "Open";
             // 
             // openToolStripMenuItem
@@ -114,7 +114,7 @@
             this.createToolStripMenuItem,
             this.createXMLToolStripMenuItem});
             this.createToolStripMenuItem1.Name = "createToolStripMenuItem1";
-            this.createToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.createToolStripMenuItem1.Size = new System.Drawing.Size(108, 22);
             this.createToolStripMenuItem1.Text = "Create";
             // 
             // createToolStripMenuItem
@@ -139,7 +139,7 @@
             this.saveLittleEndianToolStripMenuItem,
             this.saveBigEndianToolStripMenuItem});
             this.saveToolStripMenuItem1.Name = "saveToolStripMenuItem1";
-            this.saveToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.saveToolStripMenuItem1.Size = new System.Drawing.Size(108, 22);
             this.saveToolStripMenuItem1.Text = "Save";
             // 
             // saveLittleEndianToolStripMenuItem
@@ -162,7 +162,7 @@
             // 
             this.clearToolStripMenuItem.Name = "clearToolStripMenuItem";
             this.clearToolStripMenuItem.ShowShortcutKeys = false;
-            this.clearToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.clearToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
             this.clearToolStripMenuItem.Text = "Clear";
             this.clearToolStripMenuItem.Click += new System.EventHandler(this.ClearToolStripMenuItem_Click);
             // 
