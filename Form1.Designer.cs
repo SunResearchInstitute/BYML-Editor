@@ -44,14 +44,19 @@
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.yaz0CompressLittleEndianToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.decryptToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.obfuscationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deobfuscateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.reobfuscateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.disableDeletingTempFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveTextboxToFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openyamlFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.bymltext = new System.Windows.Forms.TextBox();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.saveyaz0FileDialog = new System.Windows.Forms.SaveFileDialog();
             this.openxmlFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.gamefolderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
+            this.opendictDialog = new System.Windows.Forms.OpenFileDialog();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -165,7 +170,8 @@
             // 
             this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.yaz0CompressLittleEndianToolStripMenuItem,
-            this.decryptToolStripMenuItem});
+            this.decryptToolStripMenuItem,
+            this.obfuscationToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
             this.toolsToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
             this.toolsToolStripMenuItem.Text = "Tools";
@@ -184,10 +190,34 @@
             this.decryptToolStripMenuItem.Text = "Decrypt Nisasyst files";
             this.decryptToolStripMenuItem.Click += new System.EventHandler(this.DecryptToolStripMenuItem_Click);
             // 
+            // obfuscationToolStripMenuItem
+            // 
+            this.obfuscationToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.deobfuscateToolStripMenuItem,
+            this.reobfuscateToolStripMenuItem});
+            this.obfuscationToolStripMenuItem.Name = "obfuscationToolStripMenuItem";
+            this.obfuscationToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
+            this.obfuscationToolStripMenuItem.Text = "Obfuscation";
+            // 
+            // deobfuscateToolStripMenuItem
+            // 
+            this.deobfuscateToolStripMenuItem.Name = "deobfuscateToolStripMenuItem";
+            this.deobfuscateToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.deobfuscateToolStripMenuItem.Text = "Deobfuscate";
+            this.deobfuscateToolStripMenuItem.Click += new System.EventHandler(this.DeobfuscateToolStripMenuItem_Click);
+            // 
+            // reobfuscateToolStripMenuItem
+            // 
+            this.reobfuscateToolStripMenuItem.Name = "reobfuscateToolStripMenuItem";
+            this.reobfuscateToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.reobfuscateToolStripMenuItem.Text = "Reobfuscate";
+            this.reobfuscateToolStripMenuItem.Click += new System.EventHandler(this.ReobfuscateToolStripMenuItem_Click);
+            // 
             // debugToolStripMenuItem
             // 
             this.debugToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.disableDeletingTempFolderToolStripMenuItem});
+            this.disableDeletingTempFolderToolStripMenuItem,
+            this.saveTextboxToFileToolStripMenuItem});
             this.debugToolStripMenuItem.Name = "debugToolStripMenuItem";
             this.debugToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
             this.debugToolStripMenuItem.Text = "Debug";
@@ -200,9 +230,17 @@
             this.disableDeletingTempFolderToolStripMenuItem.Text = "Disable deleting temporary folder";
             this.disableDeletingTempFolderToolStripMenuItem.Click += new System.EventHandler(this.DisableDeletingTempFolderToolStripMenuItem_Click);
             // 
+            // saveTextboxToFileToolStripMenuItem
+            // 
+            this.saveTextboxToFileToolStripMenuItem.Name = "saveTextboxToFileToolStripMenuItem";
+            this.saveTextboxToFileToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
+            this.saveTextboxToFileToolStripMenuItem.Text = "Save textbox to file";
+            this.saveTextboxToFileToolStripMenuItem.Click += new System.EventHandler(this.SaveTextboxToFileToolStripMenuItem_Click);
+            // 
             // openyamlFileDialog
             // 
             this.openyamlFileDialog.Filter = "BYML Files|*.byml;*.sbyml;*.bprm|All files (*.*)|*.*\"";
+            this.openyamlFileDialog.Title = "Open Your BYML File";
             // 
             // bymltext
             // 
@@ -221,6 +259,7 @@
             // saveFileDialog
             // 
             this.saveFileDialog.Filter = "BYML Files|*.byml;*.bprm|All files (*.*)|*.*\"";
+            this.saveFileDialog.Title = "Save Your BYML File";
             // 
             // saveyaz0FileDialog
             // 
@@ -229,11 +268,17 @@
             // openxmlFileDialog
             // 
             this.openxmlFileDialog.Filter = "BYML Files|*.byml;*.bprm|All files (*.*)|*.*\"";
+            this.openxmlFileDialog.Title = "Open Your BYML File";
             // 
             // gamefolderBrowserDialog
             // 
-            this.gamefolderBrowserDialog.Description = "Select your Splatoon 2 romfs";
+            this.gamefolderBrowserDialog.Description = "Select Your Splatoon 2 RomFS";
             this.gamefolderBrowserDialog.ShowNewFolderButton = false;
+            // 
+            // opendictDialog
+            // 
+            this.opendictDialog.Filter = "Dictionary Text File|*.txt|All files (*.*)|*.*\"";
+            this.opendictDialog.Title = "Select A Dictionary ";
             // 
             // Editor
             // 
@@ -278,6 +323,11 @@
         private System.Windows.Forms.FolderBrowserDialog gamefolderBrowserDialog;
         private System.Windows.Forms.ToolStripMenuItem debugToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem disableDeletingTempFolderToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem obfuscationToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deobfuscateToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem reobfuscateToolStripMenuItem;
+        private System.Windows.Forms.OpenFileDialog opendictDialog;
+        private System.Windows.Forms.ToolStripMenuItem saveTextboxToFileToolStripMenuItem;
     }
 }
 

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 using The4Dimension;
@@ -53,6 +54,7 @@ namespace BYML_Editor
 
         private void CreateYAMLToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Text = "BYML=Editor";
             bymltext.Text = "";
             bymltext.ReadOnly = false;
             isXML = false;
@@ -60,6 +62,7 @@ namespace BYML_Editor
 
         private void CreateXMLToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Text = "BYML=Editor";
             bymltext.Text = "";
             bymltext.ReadOnly = false;
             isXML = true;
@@ -81,6 +84,7 @@ namespace BYML_Editor
         {
             bymltext.Text = "";
             bymltext.ReadOnly = true;
+            Text = "BYML-Editor";
         }
 
         private void Yaz0CompressLittleEndianToolStripMenuItem_Click(object sender, EventArgs e)
@@ -115,17 +119,21 @@ namespace BYML_Editor
 
                 if (wantXML == false)
                 {
-                    System.Diagnostics.Process process = new System.Diagnostics.Process();
-                    System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo
+                    Process process = new Process();
+                    ProcessStartInfo startInfo = new ProcessStartInfo
                     {
-                        WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden,
+                        WindowStyle = ProcessWindowStyle.Hidden,
                         FileName = "cmd.exe",
-                        Arguments = $"/C byml_to_yml.exe \"{selected.FullName}\" \"{YamlPath.FullName}\""
+                        Arguments = $"/C byml_to_yml.exe \"{selected.FullName}\" \"{YamlPath.FullName}\"",
+                        RedirectStandardOutput = true,
+                        UseShellExecute = false,
+                        CreateNoWindow = true
                     };
                     process.StartInfo = startInfo;
                     process.Start();
                     process.WaitForExit();
-
+                    //If byml-v2 worked there should be no output.
+                    if (process.StandardOutput.ReadLine() != null) MessageBox.Show("Something went wrong, check that Python is installed and in your path with byml-v2 installed via PIP (pip install byml).", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     bymltext.Text = File.ReadAllText(YamlPath.FullName);
                     isXML = false;
                 }
@@ -136,6 +144,7 @@ namespace BYML_Editor
                 }
                 bymlselect.FileName = "";
                 bymltext.ReadOnly = false;
+                this.Text = $"BYML-Editor | {selected.Name}";
             }
         }
 
@@ -154,19 +163,25 @@ namespace BYML_Editor
                 else
                 {
                     File.WriteAllText(YamlPath.FullName, bymltext.Text);
-                    System.Diagnostics.Process process = new System.Diagnostics.Process();
-                    System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo
+                    Process process = new Process();
+                    ProcessStartInfo startInfo = new ProcessStartInfo
                     {
-                        WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden,
-                        FileName = "cmd.exe"
+                        WindowStyle = ProcessWindowStyle.Hidden,
+                        FileName = "cmd.exe",
+                        RedirectStandardOutput = true,
+                        UseShellExecute = false,
+                        CreateNoWindow = true
                     };
                     if (isBigEndian == true) startInfo.Arguments = $"/C yml_to_byml.exe \"{YamlPath.FullName}\" \"{savePath.FullName}\" -b";
                     else startInfo.Arguments = $"/C yml_to_byml.exe \"{YamlPath.FullName}\" \"{savePath.FullName}\"";
                     process.StartInfo = startInfo;
-                    //todo: catch errors somehow
                     process.Start();
                     process.WaitForExit();
+                    //If byml-v2 worked there should be no output.
+                    if (process.StandardOutput.ReadLine() != null) MessageBox.Show("Something went wrong, check that Python is installed and in your path with byml-v2 installed via PIP (pip install byml).", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
                 }
+                Text = $"BYML-Editor | {savePath.Name}";
                 saveFileDialog.FileName = "";
             }
         }
@@ -196,6 +211,72 @@ namespace BYML_Editor
 #endif
                 if (TempPath.Exists)
                     TempPath.Delete(true);
+        }
+
+        private void DeobfuscateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(bymltext.Text))
+            {
+                if (opendictDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string deobf = bymltext.Text;
+                    FileInfo dict = new FileInfo(opendictDialog.FileName);
+                    string[] param = File.ReadAllLines(opendictDialog.FileName);
+                    foreach (string replace in param)
+                    {
+                        //Are there any other Dictionaries that use diffrent formatting?
+                        string[] parts = replace.Split('=', '	', ' ');
+                        //add " " for workaround with replace because regex is a dark place.
+                        deobf = deobf.Replace(parts[0], parts[1] + " ");
+                    }
+                    bymltext.Text = deobf;
+                }
+            }
+            else
+            {
+                MessageBox.Show("BYML text box is empty.", "Empty", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void ReobfuscateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(bymltext.Text))
+            {
+                if (opendictDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string reobf = bymltext.Text;
+                    FileInfo dict = new FileInfo(opendictDialog.FileName);
+                    string[] param = File.ReadAllLines(opendictDialog.FileName);
+                    foreach (string replace in param)
+                    {
+                        //Are there any other Dictionaries that use diffrent formatting?
+                        string[] parts = replace.Split('=', '	', ' ');
+                        //add " " for workaround with replace because regex is a dark place.
+                        reobf = reobf.Replace(parts[1] + " ", parts[0]);
+                    }
+                    bymltext.Text = reobf;
+                }
+            }
+            else
+            {
+                MessageBox.Show("BYML text box is empty.", "Empty", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void SaveTextboxToFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+#if DEBUG
+            saveFileDialog.Title = "Save BYML Text Box Contents";
+            saveFileDialog.Filter = "All files(*.*) | *.* ";
+            saveFileDialog.ShowDialog();
+            if (saveFileDialog.FileName != "")
+            {
+                FileInfo save = new FileInfo(saveFileDialog.FileName);
+                File.WriteAllText(save.FullName, bymltext.Text);
+            }
+            saveFileDialog.Title = "Save Your BYML File";
+            saveFileDialog.Filter = "BYML Files|*.byml;*.bprm|All files (*.*)|*.*";
+#endif
         }
     }
 }

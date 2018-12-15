@@ -20,8 +20,8 @@ namespace BymlFormat
             header = new Header(data);
             BigEndian = header.BigEndian;
             Version = header.Version;
-            if (header.NodeNamesOffset != 0) NodeNames = new StringTable(header.NodeNamesOffset, data,BigEndian); else NodeNames = new StringTable(true);
-            if (header.StringResOffset != 0) StringRes = new StringTable(header.StringResOffset, data,BigEndian); else StringRes = new StringTable(true);
+            if (header.NodeNamesOffset != 0) NodeNames = new StringTable(header.NodeNamesOffset, data, BigEndian); else NodeNames = new StringTable(true);
+            if (header.StringResOffset != 0) StringRes = new StringTable(header.StringResOffset, data, BigEndian); else StringRes = new StringTable(true);
             BinaryReader bin;
             if (!BigEndian) bin = new BinaryReader(new MemoryStream(data)); else bin = new BigEndianReader(new MemoryStream(data));
             bin.BaseStream.Position = header.RootOffset;
@@ -51,7 +51,7 @@ namespace BymlFormat
             BinaryWriter bin;
             if (!BigEndian) bin = new BinaryWriter(mem); else bin = new BigEndianWriter(mem);
             //Header
-            bin.Write(new byte[] { 0x59, 0x42});
+            bin.Write(new byte[] { 0x59, 0x42 });
             bin.Write(Version);
             if (NodeNames != null) bin.Write((UInt32)0x10); else bin.Write((UInt32)0x00); //Offset for names table
             bin.Write((UInt32)0x00); //Temp offset for string resources
@@ -72,7 +72,7 @@ namespace BymlFormat
         }
 
         List<GenericNode> WrittenNodes = new List<GenericNode>();
-        List<uint> WrittenNodesOffs = new List<uint>();      
+        List<uint> WrittenNodesOffs = new List<uint>();
         void WriteNodes(GenericNode Node, BinaryWriter bin)
         {
             List<GenericNode> NodesToWrite = new List<GenericNode>();
@@ -211,7 +211,7 @@ namespace BymlFormat
         {
             if (data[0] == 0x59 && data[1] == 0x42) BigEndian = false;
             else if (data[0] == 0x42 && data[1] == 0x59) BigEndian = true;
-            else throw new Exception("Wrong magic number");            
+            else throw new Exception("Wrong magic number");
             BinaryReader bin;
             if (!BigEndian) bin = new BinaryReader(new MemoryStream(data)); else bin = new BigEndianReader(new MemoryStream(data));
             bin.BaseStream.Position = 2;
@@ -322,8 +322,8 @@ namespace BymlFormat
                 GenericNode g = new GenericNode();
                 List<byte> _stringIndex = new List<byte>();
                 _stringIndex.AddRange(bin.ReadBytes(3));
-                _stringIndex.Add(0x00);                
-                g.StringIndex = BitConverter.ToUInt32(_stringIndex.ToArray(), 0);                
+                _stringIndex.Add(0x00);
+                g.StringIndex = BitConverter.ToUInt32(_stringIndex.ToArray(), 0);
                 g.NodeType = bin.ReadByte();
                 g.Value = bin.ReadBytes(4);
                 if (g.Value == null) throw new Exception("Value can't be null");
@@ -410,7 +410,7 @@ namespace BymlFormat
         Empty = (byte)0xA1,
         Int = (byte)0xD1,
         Single = (byte)0xD2,
-        Boolen = (byte) 0xD0,
+        Boolen = (byte)0xD0,
         Other,
     }
 
