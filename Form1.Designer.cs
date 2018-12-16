@@ -249,6 +249,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.bymltext.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bymltext.Location = new System.Drawing.Point(12, 27);
+            this.bymltext.MaxLength = 900000000;
             this.bymltext.Multiline = true;
             this.bymltext.Name = "bymltext";
             this.bymltext.ReadOnly = true;
