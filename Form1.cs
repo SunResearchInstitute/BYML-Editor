@@ -133,7 +133,11 @@ namespace BYML_Editor
                     process.Start();
                     process.WaitForExit();
                     //If byml-v2 worked there should be no output.
-                    if (process.StandardOutput.ReadLine() != null) MessageBox.Show("Something went wrong, check that Python is installed and in your path with byml-v2 installed via PIP (pip install byml).", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    if (process.StandardOutput.ReadLine() != null)
+                    {
+                        MessageBox.Show("Something went wrong, check that Python is installed and in your path with byml-v2 installed via PIP (pip install byml).", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
                     bymltext.Text = File.ReadAllText(YamlPath.FullName);
                     isXML = false;
                 }
@@ -144,7 +148,7 @@ namespace BYML_Editor
                 }
                 bymlselect.FileName = "";
                 bymltext.ReadOnly = false;
-                this.Text = $"BYML-Editor | {selected.Name}";
+                Text = $"BYML-Editor | {selected.Name}";
             }
         }
 
@@ -179,7 +183,6 @@ namespace BYML_Editor
                     process.WaitForExit();
                     //If byml-v2 worked there should be no output.
                     if (process.StandardOutput.ReadLine() != null) MessageBox.Show("Something went wrong, check that Python is installed and in your path with byml-v2 installed via PIP (pip install byml).", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
                 }
                 Text = $"BYML-Editor | {savePath.Name}";
                 saveFileDialog.FileName = "";
@@ -227,7 +230,7 @@ namespace BYML_Editor
                         //Are there any other Dictionaries that use diffrent formatting?
                         string[] parts = replace.Split('=', '	', ' ');
                         //add " " for workaround with replace because regex is a dark place.
-                        deobf = deobf.Replace(parts[0], parts[1] + " ");
+                        deobf = deobf.Replace(parts[0], $"{parts[1]} ");
                     }
                     bymltext.Text = deobf;
                 }
@@ -252,7 +255,7 @@ namespace BYML_Editor
                         //Are there any other Dictionaries that use diffrent formatting?
                         string[] parts = replace.Split('=', '	', ' ');
                         //add " " for workaround with replace because regex is a dark place.
-                        reobf = reobf.Replace(parts[1] + " ", parts[0]);
+                        reobf = reobf.Replace($"{parts[1]} ", parts[0]);
                     }
                     bymltext.Text = reobf;
                 }
