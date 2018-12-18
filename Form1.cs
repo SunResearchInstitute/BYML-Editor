@@ -54,7 +54,7 @@ namespace BYML_Editor
 
         private void CreateYAMLToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Text = "BYML=Editor";
+            Text = "BYML-Editor";
             bymltext.Text = "";
             bymltext.ReadOnly = false;
             isXML = false;
@@ -62,7 +62,7 @@ namespace BYML_Editor
 
         private void CreateXMLToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Text = "BYML=Editor";
+            Text = "BYML-Editor";
             bymltext.Text = "";
             bymltext.ReadOnly = false;
             isXML = true;
@@ -82,9 +82,9 @@ namespace BYML_Editor
 
         private void ClearToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Text = "BYML-Editor";
             bymltext.Text = "";
             bymltext.ReadOnly = true;
-            Text = "BYML-Editor";
         }
 
         private void Yaz0CompressLittleEndianToolStripMenuItem_Click(object sender, EventArgs e)
@@ -97,7 +97,8 @@ namespace BYML_Editor
                 if (saveyaz0FileDialog.FileName != "")
                 {
                     FileInfo selected = new FileInfo(saveFileDialog.FileName);
-
+                    
+                    //TODO: Change to using.
                     FileStream byml = file.OpenRead();
                     File.WriteAllBytes(selected.FullName, Yaz0.Encode(byml));
                     byml.Close();
@@ -146,9 +147,9 @@ namespace BYML_Editor
                     bymltext.Text = BymlConverter.GetXml(selected.FullName);
                     isXML = true;
                 }
+                Text = $"BYML-Editor | {selected.Name}";
                 bymlselect.FileName = "";
                 bymltext.ReadOnly = false;
-                Text = $"BYML-Editor | {selected.Name}";
             }
         }
 
@@ -204,6 +205,7 @@ namespace BYML_Editor
                 }
             }
             openxmlFileDialog.FileName = "";
+            //TDO: set back to default
             openxmlFileDialog.Title = "";
         }
 
@@ -229,7 +231,7 @@ namespace BYML_Editor
                     {
                         //Are there any other Dictionaries that use diffrent formatting?
                         string[] parts = replace.Split('=', '	', ' ');
-                        //add " " for workaround with replace because regex is a dark place.
+                        //Add " " for workaround with replace because regex is a dark place.
                         deobf = deobf.Replace(parts[0], $"{parts[1]} ");
                     }
                     bymltext.Text = deobf;
@@ -254,7 +256,7 @@ namespace BYML_Editor
                     {
                         //Are there any other Dictionaries that use diffrent formatting?
                         string[] parts = replace.Split('=', '	', ' ');
-                        //add " " for workaround with replace because regex is a dark place.
+                        //Add " " for workaround with replace because regex is a dark place.
                         reobf = reobf.Replace($"{parts[1]} ", parts[0]);
                     }
                     bymltext.Text = reobf;
