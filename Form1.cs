@@ -102,14 +102,14 @@ namespace BYML_Editor
                     FileStream byml = file.OpenRead();
                     File.WriteAllBytes(selected.FullName, Yaz0.Encode(byml));
                     byml.Close();
+                    saveyaz0FileDialog.FileName = "";
                 }
             }
         }
 
         private void ConvertBYML(bool wantXML)
         {
-            Directory.CreateDirectory(TempPath.FullName);
-
+            //Can i define it in the if?
             OpenFileDialog bymlselect;
             if (wantXML == true) bymlselect = openxmlFileDialog;
             else bymlselect = openyamlFileDialog;
@@ -120,6 +120,7 @@ namespace BYML_Editor
 
                 if (wantXML == false)
                 {
+                    Directory.CreateDirectory(TempPath.FullName);   
                     Process process = new Process();
                     ProcessStartInfo startInfo = new ProcessStartInfo
                     {
@@ -205,7 +206,7 @@ namespace BYML_Editor
                 }
             }
             openxmlFileDialog.FileName = "";
-            //TDO: set back to default
+            //TODO: set back to default
             openxmlFileDialog.Title = "";
         }
 
