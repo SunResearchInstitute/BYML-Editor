@@ -183,7 +183,11 @@ namespace BYML_Editor
                     process.Start();
                     process.WaitForExit();
                     //If byml-v2 worked there should be no output.
-                    if (process.StandardOutput.ReadLine() != null) MessageBox.Show("Something went wrong, check that Python is installed and in your path with byml-v2 installed via PIP (pip install byml).", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    if (process.StandardOutput.ReadLine() != null) 
+                    {
+                        MessageBox.Show("Something went wrong, check that Python is installed and in your path with byml-v2 installed via PIP (pip install byml).", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
                 }
                 Text = $"BYML-Editor | {savePath.Name}";
                 saveFileDialog.FileName = "";
