@@ -109,18 +109,22 @@ namespace BYML_Editor
 
         private void ConvertBYML(bool wantXML)
         {
-            //Can i define it in the if?
             OpenFileDialog bymlselect;
-            if (wantXML == true) bymlselect = openxmlFileDialog;
+            if (wantXML) bymlselect = openxmlFileDialog;
             else bymlselect = openyamlFileDialog;
 
             if (bymlselect.ShowDialog() == DialogResult.OK)
             {
                 FileInfo selected = new FileInfo(bymlselect.FileName);
 
-                if (wantXML == false)
+                if (wantXML)
                 {
-                    Directory.CreateDirectory(TempPath.FullName);   
+                    bymltext.Text = BymlConverter.GetXml(selected.FullName);
+                    isXML = true;
+                }
+                else
+                {
+                    Directory.CreateDirectory(TempPath.FullName);
                     Process process = new Process();
                     ProcessStartInfo startInfo = new ProcessStartInfo
                     {
@@ -143,11 +147,6 @@ namespace BYML_Editor
                     bymltext.Text = File.ReadAllText(YamlPath.FullName);
                     isXML = false;
                 }
-                else
-                {
-                    bymltext.Text = BymlConverter.GetXml(selected.FullName);
-                    isXML = true;
-                }
                 Text = $"BYML-Editor | {selected.Name}";
                 bymlselect.FileName = "";
                 bymltext.ReadOnly = false;
@@ -160,9 +159,9 @@ namespace BYML_Editor
             if (saveFileDialog.FileName != "")
             {
                 FileInfo savePath = new FileInfo(saveFileDialog.FileName);
-                if (isXML == true)
+                if (isXML)
                 {
-                    if (isBigEndian == true) bymltext.Text.Replace($"isBigEndian Value=\"False\"", $"isBigEndian Value=\"True\"");
+                    if (isBigEndian) bymltext.Text.Replace($"isBigEndian Value=\"False\"", $"isBigEndian Value=\"True\"");
                     else bymltext.Text.Replace($"isBigEndian Value=\"True\"", $"isBigEndian Value=\"False\"");
                     File.WriteAllBytes(savePath.FullName, BymlConverter.GetByml(bymltext.Text));
                 }
@@ -178,7 +177,7 @@ namespace BYML_Editor
                         UseShellExecute = false,
                         CreateNoWindow = true
                     };
-                    if (isBigEndian == true) startInfo.Arguments = $"/C yml_to_byml.exe \"{YamlPath.FullName}\" \"{savePath.FullName}\" -b";
+                    if (isBigEndian) startInfo.Arguments = $"/C yml_to_byml.exe \"{YamlPath.FullName}\" \"{savePath.FullName}\" -b";
                     else startInfo.Arguments = $"/C yml_to_byml.exe \"{YamlPath.FullName}\" \"{savePath.FullName}\"";
                     process.StartInfo = startInfo;
                     process.Start();
